@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
+import fondo from './assets/images/fondo.svg'
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
@@ -9,7 +10,23 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Nunito', sans-serif;
     font-weight: bold;
 }
+
+html {
+  background: url(${fondo});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height:100%;
+  @media only screen and (max-width: 900px) {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
 `;
+
+export const BodyContainer = styled.html`
+ height: 100%;
+`
 
 export const Container = styled.div`
   font-family: "Nunito", sans-serif;

@@ -14,7 +14,7 @@ import logo from "../../assets/images/logo.png";
 const Navbar = () => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
-  
+
   return (
     <>
       <Nav>
@@ -22,7 +22,7 @@ const Navbar = () => {
           <NavLogo src={logo} alt='Logo' id='logo' />
           <NavMenu onClick={handleClick} click={click}>
             <NavItem>
-              <NavElement href='/seguimiento'>Seguimiento de Comprobantes</NavElement>
+              <NavElement href='./search'>Seguimiento de Comprobantes</NavElement>
             </NavItem>
             <NavItem>
               <NavElement href='/gestion'>Gestion de Usuarios</NavElement>
