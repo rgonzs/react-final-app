@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Container } from "./../../globalStyles";
-import fondo from "./../../assets/images/fondo.svg";
 
 export const SearchContainer = styled.div`
   display: flex;

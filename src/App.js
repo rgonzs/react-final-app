@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar/Navbar";
 import Search from "./components/Search/Search";
 import Dashboard from "./components/Dashboard/Dashboard";
-import GlobalStyle, { BodyContainer } from "./globalStyles";
+import GlobalStyle from "./globalStyles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {

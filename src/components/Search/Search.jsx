@@ -1,5 +1,4 @@
 import React from "react";
-import { Container } from "./../../globalStyles";
 import { Form, SearchContainer, SearchButton, SearchLabel, TitleContainer, SearchInput, SearchSelect } from "./Search.elements";
 
 const Search = () => {
