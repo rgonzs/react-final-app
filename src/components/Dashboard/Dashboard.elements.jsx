@@ -9,7 +9,7 @@ export const CardContainer = styled.div`
 `;
 
 export const DashboardCard = styled.button`
-  color:#636569;
+  color: #636569;
   align-items: center;
   border-radius: 20px;
   border: 0px;
@@ -37,6 +37,11 @@ export const DashboardButton = styled.button`
   color: #009bdb;
   font-size: 20px;
   margin-right: 3px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
   &:focus {
     outline: none;
     cursor: pointer;
