@@ -9,7 +9,7 @@ import {
   NavItem,
   NavbarContainer,
 } from "./Navbar.elements";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo_white.png";
 
 const Navbar = () => {
   const [click, setClick] = useState(false);

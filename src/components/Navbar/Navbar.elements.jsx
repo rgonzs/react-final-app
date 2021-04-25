@@ -10,7 +10,8 @@ export const NavbarContainer = styled(Container)`
 `;
 
 export const Nav = styled.nav`
-  background: rgba(0, 153, 255, 0.9);
+  /* background: rgba(0, 153, 255, 0.9); */
+  background: rgb(255, 255, 255);
   height: 80px;
   display: flex;
   justify-content: flex-start;
@@ -65,7 +66,8 @@ export const NavMenu = styled.ul`
 `;
 
 export const NavElement = styled.a`
-  color: #fff;
+  color: rgba(0, 153, 255, 0.9);
+  /* color: #fff; */
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -73,7 +75,7 @@ export const NavElement = styled.a`
   height: 100%;
   @media screen and (max-width: 960px) {
     text-align: center;
-    padding: 2rem 0rem ;
+    padding: 2rem 0rem;
     width: 100%;
     display: table;
     &:hover {

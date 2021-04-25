@@ -1,40 +1,49 @@
-import React from "react";
-import {
-  DashboardButton,
-  DashboardCard,
-  CardContainer,
-} from "./Dashboard.elements";
-import buscar from "../../assets/images/buscar.svg";
-import report from "../../assets/images/report.svg";
-import shield from "../../assets/images/shield.svg";
+import React from 'react';
+import DashboardChart from './../DashboardChart/DashboardChart';
+import DashboardTable from './../DashboardTable/DashboardTable';
+import Events from './../Events/Events';
+import { Container, Grid, makeStyles, Paper } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+
+  middle: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 20,
+    maxWidth: 1000,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
 const Dashboard = () => {
+  const classes = useStyles();
   return (
-    <main>
-      <CardContainer id='card-container'>
-        <DashboardCard className='card'>
-          <div className='card-text'>
-            <img src={buscar} alt='Search logo' />
-            <h3>Busqueda de Comprobantes</h3>
-          </div>
-          <DashboardButton>Continuar →</DashboardButton>
-        </DashboardCard>
-        <DashboardCard className='card card-central'>
-          <div className='card-text'>
-            <img src={shield} alt='Users' />
-            <h3>Gestion de Usuarios</h3>
-          </div>
-          <DashboardButton>Continuar →</DashboardButton>
-        </DashboardCard>
-        <DashboardCard className='card'>
-          <div className='card-text'>
-            <img src={report} alt='Reports logo' />
-            <h3>Reportes</h3>
-          </div>
-          <DashboardButton>Continuar →</DashboardButton>
-        </DashboardCard>
-      </CardContainer>
-    </main>
+    <Container className={(classes.root, classes.middle)}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={8}>
+          <Paper className={classes.paper}>
+            <DashboardChart />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Paper className={classes.paper}>
+            <Events />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          <Paper className={classes.paper}>
+            <DashboardTable />
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

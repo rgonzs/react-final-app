@@ -1,48 +1,102 @@
-import React from "react";
-import { Form, SearchContainer, SearchButton, SearchLabel, TitleContainer, SearchInput, SearchSelect } from "./Search.elements";
+import {
+  InputLabel,
+  TextField,
+  Button,
+  MenuItem,
+  Select,
+  FormControl,
+  Typography,
+  Paper,
+  Box,
+} from '@material-ui/core';
+import React, { useState } from 'react';
+import { useStyles } from './Search.classes';
 
 const Search = () => {
+  const classes = useStyles();
+  const [ruc, setRuc] = useState('');
+  const [comprobante, setComprobante] = useState('');
+  const [TipoDoc, setTipoDoc] = useState('');
+
+  const handleRuc = (event) => {
+    setRuc(event.target.value);
+  };
+
+  const handleComprobante = (event) => {
+    setComprobante(event.target.value);
+  };
+
+  const handleTipoDoc = (event) => {
+    console.log(event.target.value);
+    setTipoDoc(event.target.value);
+  };
+
   return (
-    <>
-      <SearchContainer>
-        <Form action='' >
-          <TitleContainer id='title'>Busqueda de comprobante</TitleContainer>
-          <SearchLabel htmlFor='ruc'>
-            RUC EMISOR
-          </SearchLabel>
-          <SearchInput
+    <Box
+      display="flex"
+      alignContent={'center'}
+      justifyContent="center"
+      direction={'column'}
+    >
+      <Paper className={classes.paper} elevation={3}>
+        <Box>
+          <Typography variant="h6">Consulta de comprobantes</Typography>
+        </Box>
+        <Box paddingTop={3}>
+          <TextField
+            id="ruc"
+            label="Ruc Emisor"
+            variant="outlined"
+            className={classes.formControl}
             type="text"
-            pattern="[0-9]*"
-            id='ruc'
-            name='ruc'
-            placeholder='Numero de Ruc'
-            maxlength='10'
+            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+            value={ruc}
+            onChange={handleRuc}
           />
-          <SearchLabel htmlFor='tipodoc'>
-            TIPO DE DOCUMENTO
-          </SearchLabel>
-          <SearchSelect name='tipodoc' id='tipodoc'>
-            <option value='default'>SELECCIONAR...</option>
-            <option value='factura'>FACTURA</option>
-            <option value='boleta'>BOLETA</option>
-            <option value='resumen'>RESUMEN</option>
-            <option value='nc'>NOTA DE CREDITO</option>
-            <option value='nd'>NOTA DE DEBITO</option>
-          </SearchSelect>
-          <SearchLabel htmlFor='documento'>
-            SERIE-CORRELATIVO
-          </SearchLabel>
-          <SearchInput
-            type='text'
-            id='documento'
-            name='documento'
-            placeholder='Serie-Correlativo'
-            maxlength='13'
+        </Box>
+        <Box paddingTop={3}>
+          <TextField
+            id="serie"
+            label="Serie-Correlativo"
+            variant="outlined"
+            className={classes.formControl}
+            value={comprobante}
+            onChange={handleComprobante}
           />
-          <SearchButton>Buscar</SearchButton>
-        </Form>
-      </SearchContainer>
-    </>
+        </Box>
+        <Box paddingTop={3}>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="tipo-doc-select-label" variant="outlined">
+              Tipo Documento
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="tipo-doc-select"
+              variant="outlined"
+              label="Tipo documento"
+              value={TipoDoc ? TipoDoc : ''}
+              onChange={handleTipoDoc}
+            >
+              <MenuItem aria-label="None" value="">
+                Ninguno
+              </MenuItem>
+              <MenuItem value={'01'}>Factura</MenuItem>
+              <MenuItem value={'RC'}>Resumen</MenuItem>
+              <MenuItem value={'03'}>Boleta</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Box paddingTop={3}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.ButtonControl}
+          >
+            Buscar
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 
