@@ -1,8 +1,8 @@
 import React from 'react';
 import DashboardChart from './../DashboardChart/DashboardChart';
 import DashboardTable from './../DashboardTable/DashboardTable';
-import Events from './../Events/Events';
 import { Container, Grid, makeStyles, Paper } from '@material-ui/core';
+import DashboardEvents from './../DashboardEvents/DashboardEvents';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    height: 250
   },
 }));
 
@@ -34,13 +35,13 @@ const Dashboard = () => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <Paper className={classes.paper}>
-            <Events />
+          <DashboardEvents />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12}>
-          <Paper className={classes.paper}>
-            <DashboardTable />
-          </Paper>
+          {/* <Paper className={classes.paper}> */}
+          <DashboardTable  />
+          {/* </Paper> */}
         </Grid>
       </Grid>
     </Container>

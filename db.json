@@ -53,9 +53,16 @@
       "sabado",
       "domingo"
     ],
-    "value": [100, 200, 300, 150, 122, 143, 163]
+    "value": [
+      100,
+      200,
+      300,
+      150,
+      122,
+      143,
+      163
+    ]
   },
-
   "dashboard": [
     {
       "id": 1,
@@ -105,6 +112,152 @@
       "ruc": "20478115118",
       "rz": "RUC PRUEBA",
       "user": "Usuario Prueba 3"
+    }
+  ],
+  "search": [
+    {
+      "ruc": "20478005017",
+      "comprobante": "F001-22222",
+      "TipoDoc": "03",
+      "id": 1
+    },
+    {
+      "ruc": "20478005017",
+      "comprobante": "F001-22222",
+      "TipoDoc": "03",
+      "id": 2
+    },
+    {
+      "ruc": "20478005017",
+      "comprobante": "F001-22222",
+      "TipoDoc": "03",
+      "id": 3
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "",
+      "id": 4
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "",
+      "id": 5
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "",
+      "id": 6
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "",
+      "id": 7
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "",
+      "id": 8
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "",
+      "id": 9
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "01",
+      "id": 10
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "03",
+      "id": 11
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "03",
+      "id": 12
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "",
+      "id": 13
+    },
+    {
+      "ruc": "",
+      "comprobante": "asdadasdadas",
+      "TipoDoc": "",
+      "id": 14
+    },
+    {
+      "ruc": "",
+      "comprobante": "asdadasdadas",
+      "TipoDoc": "RC",
+      "id": 15
+    },
+    {
+      "ruc": "asdadad",
+      "comprobante": "asdadasdadas",
+      "TipoDoc": "RC",
+      "id": 16
+    },
+    {
+      "ruc": "20478005017",
+      "comprobante": "asdadadsasdas",
+      "TipoDoc": "RC",
+      "id": 17
+    },
+    {
+      "ruc": "",
+      "comprobante": "",
+      "TipoDoc": "",
+      "id": 18
+    },
+    {
+      "ruc": "20478005017",
+      "comprobante": "asdadas",
+      "TipoDoc": "RC",
+      "id": 19
+    },
+    {
+      "ruc": "20478005017",
+      "comprobante": "asdadasas1111",
+      "TipoDoc": "RC",
+      "id": 20
+    },
+    {
+      "ruc": "20478005017",
+      "comprobante": "asdadasas1111",
+      "TipoDoc": "03",
+      "id": 21
+    },
+    {
+      "ruc": "20478005017",
+      "comprobante": "asdadas",
+      "TipoDoc": "01",
+      "id": 22
+    },
+    {
+      "ruc": "20478005017",
+      "comprobante": "F001-0001",
+      "TipoDoc": "RC",
+      "id": 23
+    },
+    {
+      "ruc": "20478005017",
+      "comprobante": "F001-0002",
+      "TipoDoc": "RC",
+      "id": 24
     }
   ]
 }

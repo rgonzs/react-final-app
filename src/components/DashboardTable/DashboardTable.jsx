@@ -9,24 +9,41 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
+  title: {
+    marginTop: 6,
+  },
   table: {
     minWidth: 100,
+  },
+  paper: {
+    height: 250,
   },
 });
 
 const DashboardTable = () => {
   const classes = useStyles();
   const { data, isLoading, error } = useGet('http://10.0.5.128:8001/dashboard');
-  console.log(data);
   return (
     <>
-      {isLoading && <p>Cargando</p>}
+      {isLoading && (
+        <Paper className={classes.paper}>
+          <Typography align="center">Cargando ...</Typography>
+        </Paper>
+      )}
       {data && (
         <TableContainer component={Paper}>
-          <p>Cambios recientes</p>
+          <Typography
+            variant="h6"
+            gutterBottom
+            align="center"
+            className={classes.title}
+          >
+            Cambios recientes
+          </Typography>
           <Table
             className={classes.table}
             size="small"
@@ -42,7 +59,7 @@ const DashboardTable = () => {
             </TableHead>
             <TableBody>
               {data.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} hover={true}>
                   <TableCell>{row.fecha}</TableCell>
                   <TableCell>{row.ruc}</TableCell>
                   <TableCell>{row.rz}</TableCell>
@@ -52,6 +69,14 @@ const DashboardTable = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      )}
+      {error && (
+        <Paper className={classes.paper}>
+          <Typography align="center">
+            No se pudo establecer una conexion correcta, intente de nuevo mas
+            tarde
+          </Typography>
+        </Paper>
       )}
     </>
   );

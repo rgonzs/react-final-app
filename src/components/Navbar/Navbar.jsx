@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import React, { useState } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import {
   MobileIcon,
   Nav,
@@ -8,8 +8,8 @@ import {
   NavMenu,
   NavItem,
   NavbarContainer,
-} from "./Navbar.elements";
-import logo from "../../assets/images/logo_white.png";
+} from './Navbar.elements';
+import logo from '../../assets/images/logo_white.png';
 
 const Navbar = () => {
   const [click, setClick] = useState(false);
@@ -19,21 +19,21 @@ const Navbar = () => {
     <>
       <Nav>
         <NavbarContainer>
-          <NavLogo src={logo} alt='Logo' id='logo' />
+          <NavLogo src={logo} alt="Logo" id="logo" />
           <NavMenu onClick={handleClick} click={click}>
             <NavItem>
-              <NavElement href='/'>Inicio</NavElement>
+              <NavElement href="/">Inicio</NavElement>
             </NavItem>
             <NavItem>
-              <NavElement href='/search'>
+              <NavElement href="/search">
                 Seguimiento de Comprobantes
               </NavElement>
             </NavItem>
             <NavItem>
-              <NavElement href='/gestion'>Gestion de Usuarios</NavElement>
+              <NavElement href="/gestion">Gestion de Usuarios</NavElement>
             </NavItem>
             <NavItem>
-              <NavElement href='/reportes'>Reportes</NavElement>
+              <NavElement href="/report">Reportes</NavElement>
             </NavItem>
           </NavMenu>
           <MobileIcon onClick={handleClick}>
