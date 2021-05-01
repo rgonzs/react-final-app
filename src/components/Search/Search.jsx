@@ -12,24 +12,61 @@ import {
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useStyles } from './Search.classes';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
+const SwalAlert = withReactContent(Swal);
 const Search = () => {
   const classes = useStyles();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm('');
 
   const sendSubmit = (data) => {
-    console.log(data);
-    fetch(' http://10.0.5.128:8001/search', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    // SwalAlert.showLoading()
+    // fetch(' http://10.0.5.128:8001/search', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(data),
+    // }).then((res) => console.log(res));
+    SwalAlert.fire({
+      title: 'Cargando...',
+      text: 'Por favor espera mientras se realiza la busqueda',
+      showCancelButton: false,
+      showConfirmButton: false,
+      showLoaderOnConfirm: false,
+      preConfirm: (data) => {
+        return fetch('http://10.0.5.128:8001/search', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(response.statusText);
+            }
+            return response.json();
+          })
+          .catch((error) => {
+            Swal.showValidationMessage(`Request failed: ${error}`);
+          });
       },
-      body: JSON.stringify(data),
-    }).then(() => alert('Blog updated'));
+      allowOutsideClick: () => !SwalAlert.isLoading(),
+    }).then((result) => {
+      console.log(result);
+      if (result.isConfirmed) {
+        SwalAlert.fire({
+          title: `${result.value.login}'s avatar`,
+          imageUrl: result.value.avatar_url,
+        });
+      }
+    });
   };
 
   return (
@@ -53,7 +90,7 @@ const Search = () => {
               variant="outlined"
               className={classes.formControl}
               type="number"
-              inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+              inputProps={{ inputMode: 'numeric', pattern: '[0-9]{11}' }}
               onInvalid={() => 'Ingresa un valor correcto'}
               {...register('ruc', { required: true })}
             />

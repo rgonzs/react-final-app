@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGet } from './../../hooks/useFetch/useFetch';
+import { useGet } from './../../hooks/Requests/Requests';
 import {
   makeStyles,
   Paper,
