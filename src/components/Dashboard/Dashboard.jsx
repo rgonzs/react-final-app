@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    height: 250
+    height: 250,
+    borderRadius: '25px',
   },
 }));
 
@@ -35,12 +36,12 @@ const Dashboard = () => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <Paper className={classes.paper}>
-          <DashboardEvents />
+            <DashboardEvents />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={12}>
           {/* <Paper className={classes.paper}> */}
-          <DashboardTable  />
+          <DashboardTable />
           {/* </Paper> */}
         </Grid>
       </Grid>

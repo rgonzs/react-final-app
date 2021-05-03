@@ -11,6 +11,7 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
+import { urlApi } from '../../utils/endpoints';
 
 const useStyles = makeStyles({
   title: {
@@ -21,12 +22,13 @@ const useStyles = makeStyles({
   },
   paper: {
     height: 250,
+    borderRadius: '25px',
   },
 });
 
 const DashboardTable = () => {
   const classes = useStyles();
-  const { data, isLoading, error } = useGet('http://10.0.5.128:8001/dashboard');
+  const { data, isLoading, error } = useGet(`${urlApi}/dashboard`);
   return (
     <>
       {isLoading && (
@@ -47,7 +49,7 @@ const DashboardTable = () => {
           <Table
             className={classes.table}
             size="small"
-            aria-label="a dense table"
+            aria-label="Tabla de creacion de recursos"
           >
             <TableHead>
               <TableRow>

@@ -26,3 +26,8 @@ export const useGet = (url) => {
 
   return { data, isLoading, error };
 };
+
+export const sendPost = async (url, data) => {
+  const response = await axios.post(url,data)
+  const status = await response.status
+}

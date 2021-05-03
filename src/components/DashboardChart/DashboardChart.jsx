@@ -11,9 +11,10 @@ import { useGet } from "../../hooks/Requests/Requests";
 //   Legend,
 // } from "recharts";
 import { Line } from "react-chartjs-2";
+import { urlApi } from './../../utils/endpoints';
 
 const DashboardChart = () => {
-  const { data, isLoading, error } = useGet("http://10.0.5.128:8001/events2");
+  const { data, isLoading, error } = useGet(`${urlApi}/events2`);
   const labels = data?.name;
   const chartConfig = {
     labels: labels,

@@ -1,0 +1,1 @@
+export const urlApi = 'http://10.0.5.128:8001'
