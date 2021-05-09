@@ -22,7 +22,7 @@ const NavbarUI = () => {
   const classes = useStyles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const [MenuMobile, setMenuMobile] = useState(false);
 
@@ -32,13 +32,13 @@ const NavbarUI = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
+  // const handleMobileMenuClose = () => {
+  //   setMobileMoreAnchorEl(null);
+  // };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+    // handleMobileMenuClose();
   };
 
   const handleOpenMobileMenu = () => {
@@ -61,13 +61,11 @@ const NavbarUI = () => {
       onClose={handleMenuClose}
     >
       <MenuItem
-        onClick={handleMenuClose}
         onClick={() => history.push('/account')}
       >
         Mi cuenta
       </MenuItem>
       <MenuItem
-        onClick={handleMenuClose}
         onClick={() => history.push('/logout')}
       >
         Cerrar Sesion

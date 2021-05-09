@@ -12,62 +12,20 @@ import {
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useStyles } from './Search.classes';
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
+// import withReactContent from 'sweetalert2-react-content';
+// import Swal from 'sweetalert2';
+import { usePostSearch } from '../../hooks/usePostSearch';
 
-const SwalAlert = withReactContent(Swal);
+// const SwalAlert = withReactContent(Swal);
 const Search = () => {
   const classes = useStyles();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm('');
-
+  const {register,handleSubmit,formState: { errors }} = useForm('');
+  const url = 'http://localhost:3333';
+  const [res, apiMethod] = usePostSearch({url: url, headers: {ContentType: 'application/json'}});
   const sendSubmit = (data) => {
-    // SwalAlert.showLoading()
-    // fetch(' http://10.0.5.128:8001/search', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // }).then((res) => console.log(res));
-    SwalAlert.fire({
-      title: 'Cargando...',
-      text: 'Por favor espera mientras se realiza la busqueda',
-      showCancelButton: false,
-      showConfirmButton: false,
-      showLoaderOnConfirm: false,
-      preConfirm: (data) => {
-        return fetch('http://10.0.5.128:8001/search', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(response.statusText);
-            }
-            return response.json();
-          })
-          .catch((error) => {
-            Swal.showValidationMessage(`Request failed: ${error}`);
-          });
-      },
-      allowOutsideClick: () => !SwalAlert.isLoading(),
-    }).then((result) => {
-      console.log(result);
-      if (result.isConfirmed) {
-        SwalAlert.fire({
-          title: `${result.value.login}'s avatar`,
-          imageUrl: result.value.avatar_url,
-        });
-      }
-    });
-  };
+    apiMethod(data)
+  }
+  
 
   return (
     <Box
@@ -112,10 +70,11 @@ const Search = () => {
                 Tipo Documento
               </InputLabel>
               <Select
-                labelId="demo-simple-select-label"
+                labelId="tipo-doc-select-label"
                 id="tipo-doc-select"
                 variant="outlined"
                 label="Tipo documento"
+                defaultValue={''}
                 {...register('TipoDoc', { required: true })}
               >
                 <MenuItem aria-label="None" value="">
@@ -138,6 +97,7 @@ const Search = () => {
               Buscar
             </Button>
           </Box>
+          {res.data?.ruc}
         </form>
       </Paper>
     </Box>
