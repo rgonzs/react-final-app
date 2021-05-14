@@ -5,27 +5,26 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Report from './components/Report/Report';
 import NavbarUI from './components/Navbar/NavbarUI';
 import Account from './components/Account/Account';
+import { AuthProvider } from './Auth';
 import PrivateRoute from './PrivateRoute';
+import Login from './components/Login/Login';
 
 function App() {
   return (
     <Router>
-      <GlobalStyle />
-      <NavbarUI/>
-      <Switch>
-        <Route exact path="/">
-          <Dashboard />
-        </Route>
-        <Route path="/search">
-          <Search />
-        </Route>
-        <PrivateRoute exact path="/report">
-          <Report />
-        </PrivateRoute>
-        <Route exact path="/account">
-          <Account />
-        </Route>
-      </Switch>
+      <AuthProvider>
+        <GlobalStyle />
+        <NavbarUI />
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <PrivateRoute exact path="/" component={Dashboard}/>
+          <PrivateRoute path="/search" component={Search}/>
+          <PrivateRoute exact path="/report" component={Report}/>
+          <PrivateRoute exact path="/account" component={Account}/>
+        </Switch>
+      </AuthProvider>
     </Router>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGet } from './../../hooks/Requests/Requests';
+import { useGetData } from './../../hooks/useGetData';
 import {
   makeStyles,
   Paper,
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 const DashboardTable = () => {
   const classes = useStyles();
-  const { data, isLoading, error } = useGet(`${urlApi}/dashboard`);
+  const { data, isLoading, error } = useGetData(`${urlApi}/dashboard`);
   return (
     <>
       {isLoading && (

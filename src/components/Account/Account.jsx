@@ -13,7 +13,7 @@ import {
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { useForm } from 'react-hook-form';
-import { useGet, sendPost } from './../../hooks/Requests/Requests';
+import { useGetData } from '../../hooks/useGetData';
 import { urlApi } from '../../utils/endpoints';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,12 +46,13 @@ const useStyles = makeStyles((theme) => ({
 // };
 
 const sendSubmit = (data) => {
-  sendPost(`${urlApi}/users`, data)
+  console.log(data)
+  // sendPost(`${urlApi}/users`, data)
 } 
 
 const Account = () => {
   const classes = useStyles();
-  const { data, isLoading, error } = useGet(`${urlApi}/users/1`);
+  const { data, isLoading, error } = useGetData(`${urlApi}/users/1`);
   console.log(data);
 
   const {

@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export const useGet = (url) => {
+export const useGetData = (url) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const cancelToken = axios.CancelToken;
+    const source = cancelToken.source();
     axios
-      .get(url)
+      .get(url, { cancelToken: source.token })
       .then((response) => {
         if (response.status !== 200) {
           throw Error("The specified resource can't be reached");
@@ -22,12 +24,8 @@ export const useGet = (url) => {
         setIsLoading(false);
         setError(e);
       });
+    return () => source.cancel('axios request cancelled');
   }, [url]);
 
   return { data, isLoading, error };
 };
-
-export const sendPost = async (url, data) => {
-  const response = await axios.post(url,data)
-  const status = await response.status
-}

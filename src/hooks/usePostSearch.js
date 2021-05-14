@@ -13,7 +13,7 @@ export const usePostSearch = ({ url, headers }) => {
       .catch((error) => {
         setRes({ data: null, isLoading: false, error });
       });
-  }, []);
+  }, [url, headers]);
 
   return [res, callAPI];
 };

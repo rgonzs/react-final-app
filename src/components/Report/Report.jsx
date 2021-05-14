@@ -14,17 +14,16 @@ import {
 import React from 'react';
 import { urlApi } from '../../utils/endpoints';
 import { useStyles } from './Report.styles';
-import { useGet } from './../../hooks/Requests/Requests';
+import { useGetData } from './../../hooks/useGetData';
 
 const Report = () => {
   const classes = useStyles();
-  const { data, isLoading, error } = useGet(`${urlApi}/dashboard`);
+  const { data, isLoading, error } = useGetData(`${urlApi}/dashboard`);
   return (
     <Box
       display="flex"
       alignContent={'center'}
       justifyContent="center"
-      // direction={'column'}
     >
       <Paper className={classes.paper} elevation={3}>
         <Typography>Reportes</Typography>
@@ -33,7 +32,6 @@ const Report = () => {
           label="Ruc Emisor"
           variant="outlined"
           className={classes.formControl}
-          // {...register('comprobante', { required: true })}
         />
         <Button color="primary" variant="contained" type="submit" className={classes.button}>
           Generar

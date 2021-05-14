@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+
+import { useHistory } from 'react-router-dom';
+import { signOut } from '../../utils/signOut';
+import { AuthContext } from './../../Auth';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -16,14 +21,13 @@ import {
   ListItem,
   ListItemText,
 } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+
 
 const NavbarUI = () => {
+  const { currentUser } = useContext(AuthContext);
   const classes = useStyles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
-  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
   const [MenuMobile, setMenuMobile] = useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -32,13 +36,8 @@ const NavbarUI = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  // const handleMobileMenuClose = () => {
-  //   setMobileMoreAnchorEl(null);
-  // };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    // handleMobileMenuClose();
   };
 
   const handleOpenMobileMenu = () => {
@@ -58,7 +57,7 @@ const NavbarUI = () => {
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
+      onClick={handleMenuClose}
     >
       <MenuItem
         onClick={() => history.push('/account')}
@@ -66,7 +65,7 @@ const NavbarUI = () => {
         Mi cuenta
       </MenuItem>
       <MenuItem
-        onClick={() => history.push('/logout')}
+        onClick={signOut}
       >
         Cerrar Sesion
       </MenuItem>
@@ -99,7 +98,7 @@ const NavbarUI = () => {
         >
           <ListItemText primary={'CUENTA'} />
         </ListItem>
-        <ListItem button key={'logout'} onClick={() => history.push('/logout')}>
+        <ListItem button key={'logout'} onClick={signOut}>
           <ListItemText primary={'CERRAR SESION'} />
         </ListItem>
       </List>
@@ -114,6 +113,7 @@ const NavbarUI = () => {
 
   return (
     <div className={classes.grow}>
+      {!!currentUser && (
       <AppBar position="static" style={{ background: '#ffffff' }}>
         <Toolbar>
           <img src={logo} alt="Logo Bizlinks" style={{ width: '40px' }} />
@@ -163,8 +163,9 @@ const NavbarUI = () => {
           </div>
         </Toolbar>
       </AppBar>
+      )}  
       {renderMobileMenu}
-      {renderMenu}
+      {renderMenu}    
     </div>
   );
 };
