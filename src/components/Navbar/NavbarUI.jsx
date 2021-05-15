@@ -124,7 +124,7 @@ const NavbarUI = () => {
                 Inicio
               </Typography>
             </Button>
-            <Button onClick={() => history.push('/gestion')}>
+            <Button onClick={() => history.push('/update')}>
               <Typography color="primary" variant="button">
                 GESTION DE USUARIOS
               </Typography>

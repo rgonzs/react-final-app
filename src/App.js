@@ -8,6 +8,7 @@ import Account from './components/Account/Account';
 import { AuthProvider } from './Auth';
 import PrivateRoute from './PrivateRoute';
 import Login from './components/Login/Login';
+import UpdateUsers from './components/UpdateUsers/UpdateUsers';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <PrivateRoute path="/search" component={Search}/>
           <PrivateRoute exact path="/report" component={Report}/>
           <PrivateRoute exact path="/account" component={Account}/>
+          <PrivateRoute exact path="/update" component={UpdateUsers}/>
         </Switch>
       </AuthProvider>
     </Router>
