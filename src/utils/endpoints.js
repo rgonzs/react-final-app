@@ -1,1 +1,1 @@
-export const urlApi = 'http://10.0.5.128:8001'
+export const urlApi = 'http://locahost:8001'

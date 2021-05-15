@@ -136,7 +136,7 @@ export default function CenteredGrid() {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <motion.button onClick={() => {
+                        <motion.button className='botones'onClick={() => {
                             Swal.fire({
                                 icon: 'success',
                                 title: `Empresa añadida`,
