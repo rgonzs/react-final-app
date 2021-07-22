@@ -81,7 +81,7 @@ const NavbarUI = () => {
         <ListItem
           button
           key={'gestion'}
-          onClick={() => history.push('/gestion')}
+          onClick={() => history.push('/update')}
         >
           <ListItemText primary={'GESTION DE USUARIOS'} />
         </ListItem>
