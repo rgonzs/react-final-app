@@ -9,6 +9,7 @@ import { AuthProvider } from './Auth';
 import PrivateRoute from './PrivateRoute';
 import Login from './components/Login/Login';
 import UpdateUsers from './components/UpdateUsers/UpdateUsers';
+import ManageUsers from './components/ManageUsers/ManageUsers';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/report" component={Report}/>
           <Route exact path="/account" component={Account}/>
           <Route exact path="/update" component={UpdateUsers}/>
+          <Route exact path="/create" component={ManageUsers}/>
         </Switch>
       </AuthProvider>
     </Router>
