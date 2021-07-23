@@ -11,8 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // import { motion } from 'framer-motion';
 import './UpdateUsers.css';
 // import Swal from 'sweetalert2';
-import { useForm } from 'react-hook-form';
-import { useGetRucData } from './../../hooks/useGetRucData';
+import { useForm, Controller } from 'react-hook-form';
 import { getRucData } from '../../helpers/getRucData';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,44 +49,45 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const defaultValues = {
+	ruc: '',
+};
+
 export default function CenteredGrid() {
 	const classes = useStyles();
 	const {
 		register,
+		control,
+		reset,
 		handleSubmit,
 		formState: { errors },
 	} = useForm('');
 
 	const [razonSocial, setRazonSocial] = useState('');
 
-	const { data, error, pending, setRuc } = useGetRucData(razonSocial);
-
-	
-
 	const sendSubmit = (event) => {
+		console.log(event);
 		alert(JSON.stringify(event));
-		handleChangeRazonSocial();
 	};
 
 	const handleChangeRazonSocial = async (event) => {
 		if (event.target.value.length === 11) {
-			// setRuc(callApi());
-			setRazonSocial(await callApi());
-			// console.log(data)
-			// console.log(pending && error === null )
-			// if (!pending && error === null) {
-			// 	setRazonSocial(data);
-			// }
-		} else{
-			setRazonSocial("");
+			setRazonSocial(await callApi(event.target.value));
+		} else {
+			setRazonSocial('');
 		}
 	};
 
-	const  callApi=async ()=>{
-		let result = await getRucData();
-		console.log("updateuser",result);
-		return result.userId;
-	}
+	const callApi = async (ruc) => {
+		let result = await getRucData(ruc);
+		if (result.content !== null) {
+			return result?.content.razonSocial;
+		} else if (result.success === false) {
+			return result.message;
+		} else {
+			return result;
+		}
+	};
 
 	return (
 		<Grid container direction='column' alignItems='center'>
@@ -100,19 +100,25 @@ export default function CenteredGrid() {
 					</Grid>
 					<Grid item>
 						<Box my={2}>
-							<TextField
-								id='ruc'
-								label='RUC'
-								variant='outlined'
-								fullWidth={true}
-								required={true}
-								helperText='Ruc del cliente'
-								onChange={handleChangeRazonSocial}
-								inputRef={{
-									...register('ruc', { required: true, maxLength: 11 }),
-								}}
+							<Controller
+								render={({ field }) => (
+									<TextField
+										label='RUC'
+										variant='outlined'
+										fullWidth={true}
+										required={true}
+										name={field.name}
+										onChange={(e) => {
+											handleChangeRazonSocial(e);
+											field.onChange(e);
+										}}
+									/>
+								)}
+								control={control}
+								defaultValue=''
+								name='ruc'
 							/>
-							{errors.ruc && <span>Este campo es requerido</span>}
+							{/* {errors.ruc && <span>Este campo es requerido</span>} */}
 						</Box>
 					</Grid>
 					<Grid item>
@@ -131,14 +137,16 @@ export default function CenteredGrid() {
 					<Grid item>
 						<Box my={2}>
 							<TextField
-								id='password'
+								id='new-password'
 								label='Contraseña'
 								variant='outlined'
 								type='password'
 								helperText='Este campo es requerido'
 								required={true}
 								fullWidth={true}
+								// {...register('new_password', { required: true })}
 							/>
+							{errors.new_password && <span>Este campo es requerido</span>}
 						</Box>
 					</Grid>
 					<Grid item>
@@ -151,6 +159,7 @@ export default function CenteredGrid() {
 								required={true}
 								helperText='Este campo es requerido'
 								fullWidth={true}
+								// {...register('confirm_password', { required: true })}
 							/>
 							{errors.confirm_password && <span>Este campo es requerido</span>}
 						</Box>
@@ -162,6 +171,7 @@ export default function CenteredGrid() {
 								color='primary'
 								variant='contained'
 								fullWidth={true}
+								onSubmit={() => reset({ defaultValues })}
 							>
 								Crear cliente
 							</Button>
