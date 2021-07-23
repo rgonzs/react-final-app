@@ -9,31 +9,15 @@ export const useGetRucData = () => {
 	const [ruc, setRuc] = useState(null);
 
 	useEffect(() => {
+		
 		const controller = new AbortController();
 		const signal = controller.signal;
-		async function callApi() {
-			let result = null;
-
-			if (ruc !== null) {
-				try {
-					console.log('Fetching data');
-					result = await getRucData(ruc, signal);
-					return await result;
-				} catch (error) {
-					setData(null);
-					setIsPending(false);
-					setError(error);
-				}
-			}
-		}
-		let result = callApi()
-		console.log(result)
+		let result = getRucData();
+		console.log("useGetRucData",result);
 		setData(result);
 		setError(null);
 		setIsPending(false);
-		return () => {
-			controller.abort();
-		};
+
 	}, [ruc]);
 
 	return { data, error, pending, setRuc };

@@ -13,6 +13,7 @@ import './UpdateUsers.css';
 // import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import { useGetRucData } from './../../hooks/useGetRucData';
+import { getRucData } from '../../helpers/getRucData';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -61,21 +62,32 @@ export default function CenteredGrid() {
 
 	const { data, error, pending, setRuc } = useGetRucData(razonSocial);
 
+	
+
 	const sendSubmit = (event) => {
 		alert(JSON.stringify(event));
 		handleChangeRazonSocial();
 	};
 
-	const handleChangeRazonSocial = (event) => {
+	const handleChangeRazonSocial = async (event) => {
 		if (event.target.value.length === 11) {
-			setRuc(event.target.value);
-			console.log(data)
-			console.log(pending && error === null )
-			if (!pending && error === null) {
-				setRazonSocial(data);
-			}
+			// setRuc(callApi());
+			setRazonSocial(await callApi());
+			// console.log(data)
+			// console.log(pending && error === null )
+			// if (!pending && error === null) {
+			// 	setRazonSocial(data);
+			// }
+		} else{
+			setRazonSocial("");
 		}
 	};
+
+	const  callApi=async ()=>{
+		let result = await getRucData();
+		console.log("updateuser",result);
+		return result.userId;
+	}
 
 	return (
 		<Grid container direction='column' alignItems='center'>
