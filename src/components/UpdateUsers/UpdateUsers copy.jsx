@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import { motion } from 'framer-motion';
-import './UpdateUsers.css';
 // import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import { useGetRucData } from './../../hooks/useGetRucData';

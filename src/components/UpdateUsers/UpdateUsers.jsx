@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
 	Typography,
 	Paper,
@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import { motion } from 'framer-motion';
-import './UpdateUsers.css';
 // import Swal from 'sweetalert2';
 import { useForm, Controller } from 'react-hook-form';
 import { getRucData } from '../../helpers/getRucData';
@@ -56,7 +55,7 @@ const defaultValues = {
 export default function CenteredGrid() {
 	const classes = useStyles();
 	const {
-		register,
+		watch,
 		control,
 		reset,
 		handleSubmit,
@@ -89,6 +88,9 @@ export default function CenteredGrid() {
 		}
 	};
 
+	const new_password = useRef({});
+	new_password.current = watch('new_password', '');
+
 	return (
 		<Grid container direction='column' alignItems='center'>
 			<Paper className={classes.paper}>
@@ -114,11 +116,16 @@ export default function CenteredGrid() {
 										}}
 									/>
 								)}
+								rules={{
+									required: true,
+								}}
 								control={control}
 								defaultValue=''
 								name='ruc'
 							/>
-							{/* {errors.ruc && <span>Este campo es requerido</span>} */}
+							{errors.ruc && (
+								<Typography color='error'>Este campo es requerido</Typography>
+							)}
 						</Box>
 					</Grid>
 					<Grid item>
@@ -136,32 +143,59 @@ export default function CenteredGrid() {
 					</Grid>
 					<Grid item>
 						<Box my={2}>
-							<TextField
-								id='new-password'
-								label='Contraseña'
-								variant='outlined'
-								type='password'
-								helperText='Este campo es requerido'
-								required={true}
-								fullWidth={true}
-								// {...register('new_password', { required: true })}
+							<Controller
+								render={({ field }) => (
+									<TextField
+										name={field.name}
+										label='Contraseña'
+										variant='outlined'
+										type='password'
+										required={true}
+										fullWidth={true}
+										{...field}
+									/>
+								)}
+								rules={{
+									required: true,
+									minLength: {
+										value: 12,
+										message: 'Las contraseñas deben tener al menos 12 caracteres',
+									},
+								}}
+								control={control}
+								defaultValue=''
+								name='new_password'
 							/>
-							{errors.new_password && <span>Este campo es requerido</span>}
+							{errors.new_password && (
+								<Typography color='error'>{errors.new_password.message}</Typography>
+							)}
 						</Box>
 					</Grid>
 					<Grid item>
 						<Box my={2}>
-							<TextField
-								id='confirm_password'
-								label='Confirmar contraseña'
-								type='password'
-								variant='outlined'
-								required={true}
-								helperText='Este campo es requerido'
-								fullWidth={true}
-								// {...register('confirm_password', { required: true })}
+							<Controller
+								render={({ field }) => (
+									<TextField
+										name={field.name}
+										label='Confirmar contraseña'
+										type='password'
+										variant='outlined'
+										required={true}
+										fullWidth={true}
+										{...field}
+									/>
+								)}
+								rules={{
+									required: true,
+									validate: (value) =>value=== new_password.current || 'Las contraseñas no coinciden'
+								}}
+								control={control}
+								defaultValue=''
+								name='confirm_new_password'
 							/>
-							{errors.confirm_password && <span>Este campo es requerido</span>}
+							{errors.confirm_new_password && (
+								<Typography color='error'>{errors.confirm_new_password.message}</Typography>
+							)}
 						</Box>
 					</Grid>
 					<Grid item>
