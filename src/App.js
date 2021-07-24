@@ -8,8 +8,9 @@ import Account from './components/Account/Account';
 import { AuthProvider } from './Auth';
 import PrivateRoute from './PrivateRoute';
 import Login from './components/Login/Login';
-import UpdateUsers from './components/UpdateUsers/UpdateUsers';
+import CreateUsers from './components/CreateUsers/CreateUsers';
 import ManageUsers from './components/ManageUsers/ManageUsers';
+import UpdateUsers from './components/UpdateUsers/UpdateUsers';
 
 function App() {
   return (
@@ -25,8 +26,9 @@ function App() {
           <Route path="/search" component={Search}/>
           <Route exact path="/report" component={Report}/>
           <Route exact path="/account" component={Account}/>
-          <Route exact path="/update" component={UpdateUsers}/>
-          <Route exact path="/create" component={ManageUsers}/>
+          <Route exact path="/manage" component={ManageUsers}/>
+          <Route exact path="/create" component={CreateUsers}/>
+          <Route path="/update" component={UpdateUsers}/>
         </Switch>
       </AuthProvider>
     </Router>

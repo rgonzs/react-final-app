@@ -26,5 +26,5 @@ export const useFetchClients = () => {
 		getData();
 		// return () => controller.abort();
 	}, [query]);
-	return { data, isLoading, error, setQuery };
+	return { data, isLoading, error, query, setQuery };
 };

@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
-import { Box, Grid, Paper, Typography } from '@material-ui/core';
-import { DataGrid } from '@material-ui/data-grid';
+import {
+	Box,
+	Button,
+	Container,
+	Grid,
+	Paper,
+	TextField,
+	Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useFetchClients } from '../../hooks/useFetchClients';
+import { useHistory, useParams } from 'react-router-dom';
+
 import DataTable from './DataTable';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,9 +23,8 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: theme.spacing(3),
 		padding: theme.spacing(2),
 		borderRadius: '20px',
-		maxWidth: 900,
+		// maxWidth: 900,
 		width: '100%',
-		flexDirection: 'column',
 		minHeight: 200,
 		height: '100%',
 	},
@@ -36,48 +44,116 @@ const columns = [
 
 const ManageUsers = () => {
 	const classes = useStyles();
+	const history = useHistory();
 
-	const { data: res, isLoading, error, setQuery } = useFetchClients();
+	const { data: res, isLoading, error, query, setQuery } = useFetchClients();
 	const [page, setPage] = useState('');
+
+	const getQueryParams = (url) => {
+		const parsedUrl = new URL(url);
+		const params = new URLSearchParams(parsedUrl.search);
+		return {
+			...(params.get('page') && { page: params.get('page') }),
+			...(params.get('size') && { size: params.get('size') }),
+			...(params.get('ruc') && { ruc: params.get('ruc') }),
+		};
+	};
 
 	const handlePageChange = (event) => {
 		if (event.page > page) {
 			setPage(event.page);
-			const url = new URL(res.pagination.nextPag);
-			const params = new URLSearchParams(url.search);
-			setQuery({ page: params.get('page'), size: params.get('size') });
+			setQuery(getQueryParams(res.pagination.nextPag));
 		} else if (event.page === 0) {
 			setPage('');
-			const url = new URL(res.pagination.prevPag);
-			const params = new URLSearchParams(url.search);
-			setQuery({ size: params.get('size') });
+			setQuery(getQueryParams(res.pagination.prevPag));
 		} else {
 			setPage(event.page);
-			const url = new URL(res.pagination.prevPag);
-			const params = new URLSearchParams(url.search);
-			setQuery({ page: params.get('page'), size: params.get('size') });
+			setQuery(getQueryParams(res.pagination.prevPag));
 		}
 	};
 
+	const handleInputSearchChange = (e) => {
+		if (e.target.value.length === 11) {
+			setQuery({ ...query, ruc: e.target.value });
+			setPage(0);
+		}
+	};
+
+	const handleResetFilter = (e) => {
+		setPage(0);
+		setQuery({ page: 1, size: 5 });
+	};
+
+	const handleEditClient = (e) => {
+		const {
+			id,
+			ruc,
+			service_user,
+			razon_social,
+			usuario,
+			created_on,
+			modified_on,
+		} = e.row;
+		history.push('/update', { id, ruc, service_user, razon_social });
+		// search: `?id=${id}&ruc=${ruc}&razon_social=${razon_social}&service_user${service_user}`,
+	};
+
 	return (
-		<Grid container alignItems='center' direction='column'>
-			<Paper className={classes.paper}>
-				<Box xs={12} m={1}>
-					<Typography variant='h6'>Registro de clientes</Typography>
-				</Box>
-				{isLoading ? (
-					<DataTable columns={columns} loading={isLoading} />
-				) : (
-					<DataTable
-						columns={columns}
-						rows={res.data.content}
-						loading={isLoading}
-						total={res.pagination.total}
-						onPageChange={handlePageChange}
-					/>
-				)}
-			</Paper>
-		</Grid>
+		<Container fixed maxWidth='md'>
+			<Grid
+				container
+				// alignItems='center'
+				direction='row'
+				component={Paper}
+				className={classes.paper}
+				justify='space-around'
+			>
+				{/* <Paper className={classes.paper} component={Grid}> */}
+				<Grid item xs={12}>
+					<Typography variant='h6' align='center'>
+						Registro de clientes
+					</Typography>
+				</Grid>
+				<Grid item sm={3}>
+					<Box>
+						<TextField
+							variant='outlined'
+							placeholder='Introduzca RUC'
+							color='primary'
+							inputProps={{ maxLength: 11 }}
+							onChange={handleInputSearchChange}
+						/>
+					</Box>
+				</Grid>
+				<Grid item sm={3}>
+					<Box>
+						<Button
+							variant='contained'
+							color='primary'
+							fullWidth={true}
+							onClick={handleResetFilter}
+						>
+							Limpiar
+						</Button>
+					</Box>
+				</Grid>
+				<Grid item xs={12}>
+					{isLoading ? (
+						<DataTable columns={columns} loading={isLoading} />
+					) : (
+						<DataTable
+							columns={columns}
+							rows={res.data.content}
+							loading={isLoading}
+							total={res.pagination.total}
+							onPageChange={handlePageChange}
+							onEditClient={handleEditClient}
+						/>
+					)}
+				</Grid>
+				{/* </Paper> */}
+			</Grid>
+		</Container>
 	);
 };
 
