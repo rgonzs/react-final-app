@@ -81,7 +81,7 @@ const NavbarUI = () => {
         <ListItem
           button
           key={'gestion'}
-          onClick={() => history.push('/update')}
+          onClick={() => history.push('/manage')}
         >
           <ListItemText primary={'GESTION DE USUARIOS'} />
         </ListItem>
@@ -124,7 +124,7 @@ const NavbarUI = () => {
                 Inicio
               </Typography>
             </Button>
-            <Button onClick={() => history.push('/update')}>
+            <Button onClick={() => history.push('/manage')}>
               <Typography color="primary" variant="button">
                 GESTION DE USUARIOS
               </Typography>

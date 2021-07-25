@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // import { motion } from 'framer-motion';
 // import Swal from 'sweetalert2';
 import { useForm, Controller } from 'react-hook-form';
-import { getRucData } from '../../helpers/getRucData';
+import { getRucData } from '../../../helpers/getRucData';
 
 const useStyles = makeStyles((theme) => ({
 	root: {

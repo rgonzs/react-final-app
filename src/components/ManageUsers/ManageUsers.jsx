@@ -10,9 +10,9 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useFetchClients } from '../../hooks/useFetchClients';
-import { useHistory, useParams } from 'react-router-dom';
 
 import DataTable from './DataTable';
+import ModifyClient from '../ModifyClient/ModifyClient';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
 		minWidth: 100,
 		width: '100%',
 	},
+	input: {
+		height: 20,
+	},
 }));
 
 const columns = [
@@ -44,10 +47,11 @@ const columns = [
 
 const ManageUsers = () => {
 	const classes = useStyles();
-	const history = useHistory();
 
 	const { data: res, isLoading, error, query, setQuery } = useFetchClients();
 	const [page, setPage] = useState('');
+	const [openModal, setOpenModal] = useState(false);
+	const [modalData, setModalData] = useState(null);
 
 	const getQueryParams = (url) => {
 		const parsedUrl = new URL(url);
@@ -85,21 +89,39 @@ const ManageUsers = () => {
 	};
 
 	const handleEditClient = (e) => {
-		const {
-			id,
-			ruc,
-			service_user,
-			razon_social,
-			usuario,
-			created_on,
-			modified_on,
-		} = e.row;
-		history.push('/update', { id, ruc, service_user, razon_social });
-		// search: `?id=${id}&ruc=${ruc}&razon_social=${razon_social}&service_user${service_user}`,
+		setModalData(e.row);
+		console.log('fired');
+		setOpenModal(true);
 	};
+
+	const handleCreateClient = (e) => {
+		setOpenModal(true);
+	};
+
+	const handleClose = (e) => {
+		setOpenModal(false);
+	};
+
+	const create = (
+		<ModifyClient
+			openModal={openModal}
+			handleClose={handleClose}
+			title='Crear cliente'
+		/>
+	);
+
+	const modify = (
+		<ModifyClient
+			openModal={openModal}
+			handleClose={handleClose}
+			title='Actualizar cliente'
+			data={modalData}
+		/>
+	);
 
 	return (
 		<Container fixed maxWidth='md'>
+			{modalData ? modify : create}
 			<Grid
 				container
 				// alignItems='center'
@@ -108,10 +130,9 @@ const ManageUsers = () => {
 				className={classes.paper}
 				justify='space-around'
 			>
-				{/* <Paper className={classes.paper} component={Grid}> */}
 				<Grid item xs={12}>
 					<Typography variant='h6' align='center'>
-						Registro de clientes
+						Lista de clientes
 					</Typography>
 				</Grid>
 				<Grid item sm={3}>
@@ -120,7 +141,7 @@ const ManageUsers = () => {
 							variant='outlined'
 							placeholder='Introduzca RUC'
 							color='primary'
-							inputProps={{ maxLength: 11 }}
+							inputProps={{ maxLength: 11, className: classes.input }}
 							onChange={handleInputSearchChange}
 						/>
 					</Box>
@@ -129,6 +150,18 @@ const ManageUsers = () => {
 					<Box>
 						<Button
 							variant='contained'
+							color='primary'
+							fullWidth={true}
+							onClick={handleCreateClient}
+						>
+							Crear Cliente
+						</Button>
+					</Box>
+				</Grid>
+				<Grid item sm={3}>
+					<Box>
+						<Button
+							variant='outlined'
 							color='primary'
 							fullWidth={true}
 							onClick={handleResetFilter}
@@ -151,7 +184,6 @@ const ManageUsers = () => {
 						/>
 					)}
 				</Grid>
-				{/* </Paper> */}
 			</Grid>
 		</Container>
 	);

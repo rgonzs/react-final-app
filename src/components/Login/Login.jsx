@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 import { withRouter } from 'react-router';
-import firebase from '../../firebase';
+// import firebase from '../../firebase';
 import { AuthContext } from './../../Auth';
 import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -49,7 +49,7 @@ const Login = ({ history }) => {
       // event.preventDefault();
       const { email, password } = event;
       try {
-        await firebase.auth().signInWithEmailAndPassword(email, password);
+        // await firebase.auth().signInWithEmailAndPassword(email, password);
         history.push('/');
       } catch (error) {
         alert(error);

@@ -6,33 +6,30 @@ import Report from './components/Report/Report';
 import NavbarUI from './components/Navbar/NavbarUI';
 import Account from './components/Account/Account';
 import { AuthProvider } from './Auth';
-import PrivateRoute from './PrivateRoute';
 import Login from './components/Login/Login';
-import CreateUsers from './components/CreateUsers/CreateUsers';
 import ManageUsers from './components/ManageUsers/ManageUsers';
-import UpdateUsers from './components/UpdateUsers/UpdateUsers';
+
+// import PrivateRoute from './PrivateRoute';
 
 function App() {
-  return (
-    <Router>
-      <AuthProvider>
-        <GlobalStyle />
-        <NavbarUI />
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route exact path="/" component={Dashboard}/>
-          <Route path="/search" component={Search}/>
-          <Route exact path="/report" component={Report}/>
-          <Route exact path="/account" component={Account}/>
-          <Route exact path="/manage" component={ManageUsers}/>
-          <Route exact path="/create" component={CreateUsers}/>
-          <Route path="/update" component={UpdateUsers}/>
-        </Switch>
-      </AuthProvider>
-    </Router>
-  );
+	return (
+		<Router>
+			<AuthProvider>
+				<GlobalStyle />
+				<NavbarUI />
+				<Switch>
+					<Route path='/login'>
+						<Login />
+					</Route>
+					<Route exact path='/' component={Dashboard} />
+					<Route path='/search' component={Search} />
+					<Route exact path='/report' component={Report} />
+					<Route exact path='/account' component={Account} />
+					<Route exact path='/manage' component={ManageUsers} />
+				</Switch>
+			</AuthProvider>
+		</Router>
+	);
 }
 
 export default App;

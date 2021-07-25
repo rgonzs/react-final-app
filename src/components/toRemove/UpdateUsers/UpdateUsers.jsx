@@ -1,7 +1,7 @@
 import { Grid, Typography, TextField, Box } from '@material-ui/core';
 import React from 'react';
-import MainContainer from './../CustomComponents/MainContainer';
-import CustomButton from './../CustomComponents/Button';
+import MainContainer from '../../CustomComponents/MainContainer';
+import CustomButton from '../../CustomComponents/Button';
 import { useLocation } from 'react-router-dom';
 
 const UpdateUsers = () => {

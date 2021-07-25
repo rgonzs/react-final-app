@@ -2,7 +2,6 @@ import styled, { createGlobalStyle } from 'styled-components';
 import fondo from './assets/images/fondo.png';
 
 const GlobalStyle = createGlobalStyle`
-/* @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap'); */
 * {
     box-sizing: border-box;
     margin: 0;
