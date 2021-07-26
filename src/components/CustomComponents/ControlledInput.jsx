@@ -13,6 +13,7 @@ const ControlledInput = ({
 	type = 'text',
 	value = '',
 }) => {
+	console.log(value);
 	const textRules = {
 		required: true,
 		minLength: {
@@ -44,6 +45,7 @@ const ControlledInput = ({
 				render={({ field }) => {
 					return (
 						<TextField
+							{...field}
 							name={field.name}
 							label={label}
 							variant='outlined'
@@ -74,7 +76,8 @@ const ControlledInput = ({
 					(type === 'text' && textRules)
 				}
 				control={control}
-				defaultValue={value}
+				defaultValue=''
+				// defaultValue={value}
 				name={name}
 			/>
 		</div>

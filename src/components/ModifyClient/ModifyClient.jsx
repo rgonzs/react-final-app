@@ -149,7 +149,16 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 						<Button type='submit' color='primary' variant='contained'>
 							Terminado
 						</Button>
-						<Button onClick={handleClose} color='primary' variant='outlined'>
+						<Button
+							onClick={(e) => {
+								// handleClose;
+								reset({});
+								setRazonSocial('')
+								handleClose(false)
+							}}
+							color='primary'
+							variant='outlined'
+						>
 							Cancelar
 						</Button>
 					</DialogActions>

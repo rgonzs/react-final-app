@@ -11,7 +11,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useFetchClients } from '../../hooks/useFetchClients';
 
-import DataTable from './DataTable';
+import DataTable from '../CustomComponents/DataTable';
 import ModifyClient from '../ModifyClient/ModifyClient';
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +52,7 @@ const ManageUsers = () => {
 	const [page, setPage] = useState('');
 	const [openModal, setOpenModal] = useState(false);
 	const [modalData, setModalData] = useState(null);
+	console.log(res)
 
 	const getQueryParams = (url) => {
 		const parsedUrl = new URL(url);
@@ -98,22 +99,19 @@ const ManageUsers = () => {
 		setOpenModal(true);
 	};
 
-	const handleClose = (e) => {
-		setOpenModal(false);
-	};
-
 	const create = (
 		<ModifyClient
 			openModal={openModal}
-			handleClose={handleClose}
+			handleClose={setOpenModal}
 			title='Crear cliente'
+
 		/>
 	);
 
 	const modify = (
 		<ModifyClient
 			openModal={openModal}
-			handleClose={handleClose}
+			handleClose={setOpenModal}
 			title='Actualizar cliente'
 			data={modalData}
 		/>
