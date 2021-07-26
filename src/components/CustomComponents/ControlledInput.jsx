@@ -13,7 +13,6 @@ const ControlledInput = ({
 	type = 'text',
 	value = '',
 }) => {
-	console.log(value);
 	const textRules = {
 		required: true,
 		minLength: {

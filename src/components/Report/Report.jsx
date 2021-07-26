@@ -19,6 +19,7 @@ import DatePicker from './../CustomComponents/DatePicker';
 import { Controller, useForm } from 'react-hook-form';
 import useHandlePaginator from './../../hooks/useHandlePaginator';
 import ControlledInput from './../CustomComponents/ControlledInput';
+import postForm from './../../helpers/postForm';
 
 const columns = [
 	{
@@ -91,7 +92,7 @@ const Report = () => {
 		reset,
 	} = useForm({
 		process: '',
-		ruc: '',
+		cliente: '',
 	});
 	const { page, query, response, setEvent, setResponse } = useHandlePaginator();
 	const { data, isLoading, error } = useGetData(`${urlApiRest}/api/reports`);
@@ -103,19 +104,20 @@ const Report = () => {
 		setEvent(e);
 	};
 
-	const handleRequest = (e) => {
-		console.log(e);
-		// reset({
-		// 	process: '',
-		// 	ruc: '',
-		// });
+	const handleRequest = (data) => {
+		console.log(data);
+		if (data.process === 'find') {
+			console.log('buscando');
+		} else {
+			const url = `${data.cliente}_${data.fecha_inicio}_${data.fecha_fin}`;
+			data = { ...data, url };
+			postForm({ context: 'api/reports', data });
+		}
 	};
 
 	return (
 		<Container fixed maxWidth='md'>
-			{/* <Box display='flex' alignContent={'center'} justifyContent='center'> */}
 			<Grid container component={Paper} className={classes.paper}>
-				{/* <Paper className={classes.paper} elevation={3}> */}
 				<Grid item xs={12}>
 					<Typography variant='h6'>Reportes</Typography>
 				</Grid>
@@ -124,15 +126,9 @@ const Report = () => {
 						style={{ maxWidth: '100%' }}
 						onSubmit={handleSubmit(handleRequest)}
 					>
-						{/* <TextField
-					id='serie'
-					label='Ruc Emisor'
-					variant='outlined'
-					className={classes.formControl}
-				/> */}
 						<ControlledInput
 							control={control}
-							name='ruc'
+							name='cliente'
 							label='Ruc cliente'
 							mt={1}
 							value=''
@@ -143,7 +139,7 @@ const Report = () => {
 							render={({ field }) => {
 								return (
 									<RadioGroup
-										{...field}
+										// {...field}
 										aria-label='process'
 										name='process'
 										onChange={(e) => field.onChange(e)}
@@ -163,8 +159,34 @@ const Report = () => {
 								);
 							}}
 						/>
-						<DatePicker name='inicio' label='Fecha inicio' />
-						<DatePicker name='fin' label='Fecha Fin' />
+						<Controller
+							render={({ field }) => {
+								return (
+									<DatePicker
+										// {...field}
+										name={field.name}
+										label='Fecha inicio'
+										onChange={(e) => field.onChange(e)}
+									/>
+								);
+							}}
+							control={control}
+							name='fecha_inicio'
+						/>
+						<Controller
+							render={({ field }) => {
+								return (
+									<DatePicker
+										// {...field}
+										name={field.name}
+										label='Fecha Fin'
+										onChange={(e) => field.onChange(e)}
+									/>
+								);
+							}}
+							control={control}
+							name='fecha_fin'
+						/>
 						<Button
 							color='primary'
 							variant='contained'
@@ -193,9 +215,7 @@ const Report = () => {
 					loading={false}
 					// onPageChange={handlePageChange}
 				/>
-				{/* </Paper> */}
 			</Grid>
-			{/* </Box> */}
 		</Container>
 	);
 };

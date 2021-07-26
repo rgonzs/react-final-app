@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DatePicker = ({ name, label }) => {
+const DatePicker = ({ name, label, onChange }) => {
 	const classes = useStyles();
 	return (
 		<>
@@ -23,11 +23,11 @@ const DatePicker = ({ name, label }) => {
 				id={name}
 				label={label}
 				type='date'
-				defaultValue='2021-05-24'
+				defaultValue=''
 				InputLabelProps={{
 					shrink: true,
 				}}
-				onChange={(e) => console.log(e.target.value)}
+				onChange={onChange}
 				className={classes.textField}
 			/>
 		</>
