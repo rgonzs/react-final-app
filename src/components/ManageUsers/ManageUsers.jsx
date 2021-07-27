@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useFetchClients } from '../../hooks/useFetchClients';
+import { useHistory } from "react-router-dom";
 
 import DataTable from '../CustomComponents/DataTable';
 import ModifyClient from '../ModifyClient/ModifyClient';

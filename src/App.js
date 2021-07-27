@@ -8,6 +8,7 @@ import Account from './components/Account/Account';
 import { AuthProvider } from './Auth';
 import Login from './components/Login/Login';
 import ManageUsers from './components/ManageUsers/ManageUsers';
+import ManageClientUsers from './components/ManageUsers/ManageClientUsers';
 
 // import PrivateRoute from './PrivateRoute';
 
@@ -26,6 +27,7 @@ function App() {
 					<Route exact path='/report' component={Report} />
 					<Route exact path='/account' component={Account} />
 					<Route exact path='/manage' component={ManageUsers} />
+					<Route exact path='/client/:ruc' component={ManageClientUsers} />
 				</Switch>
 			</AuthProvider>
 		</Router>

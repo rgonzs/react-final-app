@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useFetchClients } from '../../hooks/useFetchClients';
+import { useParams } from "react-router-dom";
 
 import DataTable from '../CustomComponents/DataTable';
 import ModifyClient from '../ModifyClient/ModifyClient';
@@ -37,16 +38,23 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+const rows = [
+	{ id: 1, service_user: 'USER_202010230132013', is_active: true },
+	{ id: 2, service_user: 'USER_202010230132014', is_active: true },
+	{ id: 3, service_user: 'USER_202010230132015', is_active: true },
+	{ id: 4, service_user: 'USER_202010230132016', is_active: false },
+]
+
+
 const columns = [
 	{ field: 'id', headerName: 'ID', width: 70, hide: false },
-	// { field: 'service', headerName: 'RUC', width: 130, hide: false },
 	{ field: 'service_user', headerName: 'Usuario WebService', width: 200 },
-	// { field: 'razon_social', headerName: 'Razon Social', width: 200 },
-	{ field: 'is_active', headerName: 'Esta activo', sortable: false, width: 200 },
+	{ field: 'is_active', headerName: 'Activo?', sortable: false, width: 200, type: 'boolean' },
 ];
 
-const ManageClientUsers = ({ruc}) => {
+const ManageClientUsers = () => {
 	const classes = useStyles();
+	const { ruc } = useParams()
 
 	const { data: res, isLoading, error, query, setQuery } = useFetchClients();
 	const [page, setPage] = useState('');
@@ -90,7 +98,7 @@ const ManageClientUsers = ({ruc}) => {
 	};
 
 	const handleEditClient = (e) => {
-		setModalData(e.row);
+		setModalData(...e.row);
 		console.log('fired');
 		setOpenModal(true);
 	};
@@ -121,7 +129,6 @@ const ManageClientUsers = ({ruc}) => {
 			{modalData ? modify : create}
 			<Grid
 				container
-				// alignItems='center'
 				direction='row'
 				component={Paper}
 				className={classes.paper}
@@ -129,10 +136,10 @@ const ManageClientUsers = ({ruc}) => {
 			>
 				<Grid item xs={12}>
 					<Typography variant='h6' align='center'>
-						Lista de usuarios de los clientes
+						Lista de usuarios de {ruc}
 					</Typography>
 				</Grid>
-				<Grid item sm={3}>
+				{/* <Grid item sm={3}>
 					<Box>
 						<TextField
 							variant='outlined'
@@ -142,7 +149,7 @@ const ManageClientUsers = ({ruc}) => {
 							onChange={handleInputSearchChange}
 						/>
 					</Box>
-				</Grid>
+				</Grid> */}
 				<Grid item sm={3}>
 					<Box>
 						<Button
@@ -168,24 +175,26 @@ const ManageClientUsers = ({ruc}) => {
 					</Box>
 				</Grid>
 				<Grid item xs={12}>
-					{isLoading ? (
+					{/* {isLoading ? (
 						<DataTable columns={columns} loading={isLoading} />
-					) : res.data ? (
-						<DataTable
-							columns={columns}
-							rows={res.data?.content}
-							loading={isLoading}
-							total={res.pagination?.total}
-							onPageChange={handlePageChange}
-							onEditClient={handleEditClient}
-						/>
-					) : error ? (
+					) : res.data ? ( */}
+					<DataTable
+						columns={columns}
+						// rows={res.data?.content} MOCKEADO
+						rows={rows}
+						loading={isLoading}
+						// total={res.pagination?.total} MOCKEADO
+						// total={res.pagination?.total}
+						onPageChange={handlePageChange}
+						onEditClient={handleEditClient}
+					/>
+					{/* ) : error ? (
 						error
 					) : (
 						<Typography color='error' align='center'>
 							No se pudo obtener el recurso, intente mas tarde
 						</Typography>
-					)}
+					)} */}
 				</Grid>
 			</Grid>
 		</Container>

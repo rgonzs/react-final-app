@@ -161,6 +161,7 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 													/>
 												}
 												label='Activo?'
+												checked={true}
 											/>
 										);
 									}}
