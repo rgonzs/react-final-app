@@ -39,13 +39,13 @@ const useStyles = makeStyles((theme) => ({
 
 const columns = [
 	{ field: 'id', headerName: 'ID', width: 70, hide: false },
-	{ field: 'ruc', headerName: 'RUC', width: 130, hide: false },
+	// { field: 'service', headerName: 'RUC', width: 130, hide: false },
 	{ field: 'service_user', headerName: 'Usuario WebService', width: 200 },
-	{ field: 'razon_social', headerName: 'Razon Social', width: 200 },
-	{ field: 'usuario', headerName: 'Creado por', sortable: false, width: 200 },
+	// { field: 'razon_social', headerName: 'Razon Social', width: 200 },
+	{ field: 'is_active', headerName: 'Esta activo', sortable: false, width: 200 },
 ];
 
-const ManageUsers = () => {
+const ManageClientUsers = ({ruc}) => {
 	const classes = useStyles();
 
 	const { data: res, isLoading, error, query, setQuery } = useFetchClients();
@@ -129,7 +129,7 @@ const ManageUsers = () => {
 			>
 				<Grid item xs={12}>
 					<Typography variant='h6' align='center'>
-						Lista de clientes
+						Lista de usuarios de los clientes
 					</Typography>
 				</Grid>
 				<Grid item sm={3}>
@@ -192,4 +192,4 @@ const ManageUsers = () => {
 	);
 };
 
-export default ManageUsers;
+export default ManageClientUsers;

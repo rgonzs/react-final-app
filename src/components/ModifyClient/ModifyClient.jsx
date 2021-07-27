@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core';
+import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
 import {
 	Dialog,
 	DialogTitle,
@@ -11,7 +11,7 @@ import {
 	Box,
 } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import ControlledInput from '../CustomComponents/ControlledInput';
 import { getRucData } from './../../helpers/getRucData';
 
@@ -88,7 +88,8 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 									variant='outlined'
 									helperText='Este campo se completara automaticamente'
 									fullWidth={true}
-									value={data ? data.razon_social : razonSocial}
+									// value={data?.razon_social ? data.razon_social : razonSocial}
+									value={data?.razon_social ? data.razon_social : razonSocial}
 								/>
 							</Box>
 						</Grid>
@@ -144,6 +145,33 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 								)}
 							</Box>
 						</Grid>
+						<Grid item>
+							<Box my={2}>
+								<Controller
+									control={control}
+									name='is_active'
+									render={({ field }) => {
+										return (
+											<FormControlLabel
+												control={
+													<Checkbox
+														onChange={(e) => field.onChange(e)}
+														name={field.name}
+														color='primary'
+													/>
+												}
+												label='Activo?'
+											/>
+										);
+									}}
+								/>
+								{errors.is_active && (
+									<Typography color='error'>
+										{errors.is_active.message}
+									</Typography>
+								)}
+							</Box>
+						</Grid>
 					</DialogContent>
 					<DialogActions>
 						<Button type='submit' color='primary' variant='contained'>
@@ -153,8 +181,8 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 							onClick={(e) => {
 								// handleClose;
 								reset({});
-								setRazonSocial('')
-								handleClose(false)
+								setRazonSocial('');
+								handleClose(false);
 							}}
 							color='primary'
 							variant='outlined'
