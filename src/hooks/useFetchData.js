@@ -20,9 +20,9 @@ export const useFetchData = (url, id = null) => {
 				setError(null);
 				setIsLoading(false);
 			} catch (error) {
-				console.error(error.response.data.message);
+				// console.error(error.response.data.message);
 				setData(null);
-				setError(error.response.data.message);
+				setError(error.response?.data.message||'No se pudo obtener el recurso, intente mas tarde');
 				setIsLoading(false);
 			}
 		}
