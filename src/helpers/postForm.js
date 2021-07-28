@@ -12,8 +12,6 @@ const postForm = async ({ context, data }) => {
 	} catch (error) {
 		return error.message;
 	}
-
-	return;
 };
 
 export default postForm;

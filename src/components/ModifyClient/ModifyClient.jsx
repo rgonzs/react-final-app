@@ -3,17 +3,22 @@ import {
 	Dialog,
 	DialogTitle,
 	DialogContent,
-	// DialogContentText,
 	DialogActions,
 	Button,
 	TextField,
 	Grid,
 	Box,
 } from '@material-ui/core';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import Swal from 'sweetalert2'
+
 import ControlledInput from '../CustomComponents/ControlledInput';
 import { getRucData } from './../../helpers/getRucData';
+import postForm from './../../helpers/postForm';
+import putForm from './../../helpers/putForm';
+
+
 
 const ModifyClient = ({ title, openModal, handleClose, data }) => {
 	const {
@@ -23,12 +28,35 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm('');
+	// console.log(data)
 
 	const [razonSocial, setRazonSocial] = useState('');
 
-	const sendSubmit = (event) => {
-		console.log(event);
-		alert(JSON.stringify(event));
+	const sendSubmit = (json) => {
+		console.log('Enviando formulario');
+		handleClose(false);
+		console.log(json)
+		// console.log(data)
+		if (data.is_modify) {
+			const form = {
+				ruc: json.ruc,
+				service_user: json.service_user,
+				service_password: json.new_password,
+				is_active: json.is_active || false,
+			};
+			console.log(form)
+			putForm({ context: 'api/clients', data: form }).then((res) => {
+				if (res.success) {
+					Swal.fire('Exito',res.message,'success')
+					reset({});
+				} else {
+					Swal.fire('Error',res.message,'error')
+				}
+			});
+		} else {
+			console.log('json creado')
+			reset({})
+		}
 	};
 
 	const handleChangeRazonSocial = async (event) => {
@@ -49,8 +77,19 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 			return result;
 		}
 	};
+
+	const handleRucProp = async (ruc) => {
+		setRazonSocial(await callApi(data.ruc));
+	};
+
 	const new_password = useRef({});
 	new_password.current = watch('new_password', '');
+
+	useEffect(() => {
+		if (data) {
+			handleRucProp(data.ruc);
+		}
+	}, [data]);
 
 	return (
 		<>
@@ -62,8 +101,6 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 				<DialogTitle id='form-dialog-title'>{title}</DialogTitle>
 				<form onSubmit={handleSubmit(sendSubmit)} style={{ margin: 0 }}>
 					<DialogContent>
-						{/* <DialogContentText>Registro de clientes</DialogContentText> */}
-						<Grid item xs={12}></Grid>
 						<Grid item>
 							<Box my={2}>
 								<ControlledInput
@@ -88,8 +125,7 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 									variant='outlined'
 									helperText='Este campo se completara automaticamente'
 									fullWidth={true}
-									// value={data?.razon_social ? data.razon_social : razonSocial}
-									value={data?.razon_social ? data.razon_social : razonSocial}
+									value={data?.razon_social ? data?.razon_social : razonSocial}
 								/>
 							</Box>
 						</Grid>
@@ -98,7 +134,7 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 								<ControlledInput
 									name='service_user'
 									label='Usuario WS'
-									length={10}
+									length={20}
 									control={control}
 									type='text'
 									value={data && data.service_user}
@@ -147,24 +183,18 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 						</Grid>
 						<Grid item>
 							<Box my={2}>
-								<Controller
-									control={control}
-									name='is_active'
-									render={({ field }) => {
-										return (
-											<FormControlLabel
-												control={
-													<Checkbox
-														onChange={(e) => field.onChange(e)}
-														name={field.name}
-														color='primary'
-													/>
-												}
-												label='Activo?'
-												checked={true}
-											/>
-										);
-									}}
+								<FormControlLabel
+									control={
+										<Controller
+											name='is_active'
+											control={control}
+											render={({ field }) => (
+												<Checkbox {...field} color='primary' />
+											)}
+										/>
+									}
+									x
+									label='Activo?'
 								/>
 								{errors.is_active && (
 									<Typography color='error'>
@@ -182,7 +212,7 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 							onClick={(e) => {
 								// handleClose;
 								reset({});
-								setRazonSocial('');
+								// setRazonSocial('');
 								handleClose(false);
 							}}
 							color='primary'

@@ -60,7 +60,7 @@ const ControlledInput = ({
 								maxLength:
 									type === 'password' || type === 'password_confirm'
 										? null
-										: 11,
+										: 20,
 							}}
 							onChange={(e) => {
 								handleCustomOnChange && handleCustomOnChange(e);
@@ -75,8 +75,8 @@ const ControlledInput = ({
 					(type === 'text' && textRules)
 				}
 				control={control}
-				defaultValue=''
-				// defaultValue={value}
+				// defaultValue=''
+				defaultValue={value}
 				name={name}
 			/>
 		</div>

@@ -9,8 +9,8 @@ import {
 	Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useFetchClients } from '../../hooks/useFetchClients';
-import { useHistory } from "react-router-dom";
+import { useFetchData } from '../../hooks/useFetchClients';
+import { useHistory } from 'react-router-dom';
 
 import DataTable from '../CustomComponents/DataTable';
 import ModifyClient from '../ModifyClient/ModifyClient';
@@ -39,17 +39,55 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const columns = [
-	{ field: 'id', headerName: 'ID', width: 70, hide: false },
-	{ field: 'ruc', headerName: 'RUC', width: 130, hide: false },
-	{ field: 'service_user', headerName: 'Usuario WebService', width: 200 },
-	{ field: 'razon_social', headerName: 'Razon Social', width: 200 },
+	{ field: 'id', headerName: 'ID', width: 60, hide: false },
+	{ field: 'ruc', headerName: 'RUC', width: 130, sortable: false, hide: false },
+	// { field: 'service_user', headerName: 'Usuario WebService', width: 200 },
+	{
+		field: 'razon_social',
+		headerName: 'Razon Social',
+		sortable: false,
+		width: 200,
+	},
 	{ field: 'usuario', headerName: 'Creado por', sortable: false, width: 200 },
+	{
+		field: 'is_active',
+		headerName: 'Esta activo?',
+		sortable: false,
+		width: 140,
+		type: 'boolean',
+	},
+	// {
+	// 	field: 'edit',
+	// 	headerName: 'Editar',
+	// 	sortable: false,
+	// 	width: 150,
+	// 	renderCell: (params) => (
+	// 		<strong>
+	// 			{/* {params.id} */}
+	// 			<Button
+	// 				variant='contained'
+	// 				color='primary'
+	// 				size='small'
+	// 				onClick={(e) => console.log(params.id)}
+	// 			>
+	// 				editar
+	// 			</Button>
+	// 		</strong>
+	// 	),
+	// },
 ];
 
 const ManageUsers = () => {
+	const history = useHistory();
 	const classes = useStyles();
 
-	const { data: res, isLoading, error, query, setQuery } = useFetchClients();
+	const {
+		data: res,
+		isLoading,
+		error,
+		query,
+		setQuery,
+	} = useFetchData('/api/clients');
 	const [page, setPage] = useState('');
 	const [openModal, setOpenModal] = useState(false);
 	const [modalData, setModalData] = useState(null);
@@ -91,6 +129,7 @@ const ManageUsers = () => {
 	};
 
 	const handleEditClient = (e) => {
+		history.push(`/client/${e.row.ruc}/${e.row.id}`);
 		setModalData(e.row);
 		console.log('fired');
 		setOpenModal(true);

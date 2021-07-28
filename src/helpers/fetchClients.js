@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { urlApiRest } from '../utils/endpoints';
 
-export const fetchClients = async ({ page, size, ruc }, signal) => {
+export const fetchData = async ({ page, size, ruc, url }, signal) => {
 	try {
-		const response = await axios.get(`${urlApiRest}/api/clients`, {
+		const response = await axios.get(`${urlApiRest}${url}`, {
 			params: { page, size, ruc },
 		});
 		console.log(response.data);

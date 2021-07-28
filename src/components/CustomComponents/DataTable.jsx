@@ -8,7 +8,8 @@ const DataTable = ({
 	columns = [],
 	loading = true,
 	total,
-	onEditClient
+	onEditClient,
+	onEdit,
 }) => {
 	return (
 		<>
@@ -25,6 +26,7 @@ const DataTable = ({
 				onPageSizeChange={onPageSizeChange}
 				rowsPerPageOptions={[5, 10, 25, 50, 100]}
 				onRowClick={onEditClient}
+				// onCellClick={(e) => console.log(e)}
 				autoHeight
 				disableColumnMenu
 				rowHeight={40}

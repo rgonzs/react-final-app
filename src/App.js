@@ -27,7 +27,7 @@ function App() {
 					<Route exact path='/report' component={Report} />
 					<Route exact path='/account' component={Account} />
 					<Route exact path='/manage' component={ManageUsers} />
-					<Route exact path='/client/:ruc' component={ManageClientUsers} />
+					<Route exact path='/client/:ruc/:id' component={ManageClientUsers} />
 				</Switch>
 			</AuthProvider>
 		</Router>

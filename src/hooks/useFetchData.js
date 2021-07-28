@@ -1,30 +1,33 @@
 import { useState, useEffect } from 'react';
-import { fetchData } from './../helpers/fetchClients';
+import axios from 'axios';
 
-export const useFetchData = (url) => {
+import fetchData from './../helpers/fetchData';
+
+export const useFetchData = (url, id = null) => {
 	let [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [query, setQuery] = useState({ page: 1, size: 5 });
 
 	useEffect(() => {
-		const controller = new AbortController();
-		const signal = controller.signal;
+		const controller = axios.CancelToken.source();
+		const signal = controller.token;
 		async function getData() {
 			try {
 				const { page, size, ruc } = query;
-				const res = await fetchData({ page, size, ruc, url }, signal);
+				const res = await fetchData({ page, size, ruc, id, url }, signal);
 				setData(res);
 				setError(null);
 				setIsLoading(false);
 			} catch (error) {
+				console.error(error.response.data.message);
 				setData(null);
-				setError(error.message);
+				setError(error.response.data.message);
 				setIsLoading(false);
 			}
 		}
 		getData();
-		// return () => controller.abort();
+		return () => controller.cancel('Request canceled');
 	}, [query]);
 	return { data, isLoading, error, query, setQuery };
 };
