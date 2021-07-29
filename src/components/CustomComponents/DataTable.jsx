@@ -10,6 +10,7 @@ const DataTable = ({
 	total,
 	onEditClient,
 	onEdit,
+	onSelect = null
 }) => {
 	return (
 		<>
@@ -18,7 +19,7 @@ const DataTable = ({
 				columns={columns}
 				loading={loading}
 				paginationMode='server'
-				// checkboxSelection
+				checkboxSelection
 				rowCount={total}
 				page={0}
 				pageSize={5}
@@ -29,7 +30,9 @@ const DataTable = ({
 				// onCellClick={(e) => console.log(e)}
 				autoHeight
 				disableColumnMenu
+				backIconButtonText='fila'
 				rowHeight={40}
+				onSelectionModelChange={onSelect}
 			/>
 		</>
 	);

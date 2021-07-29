@@ -9,18 +9,18 @@ import {
 	Grid,
 	Box,
 } from '@material-ui/core';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 import ControlledInput from '../CustomComponents/ControlledInput';
 import { getRucData } from './../../helpers/getRucData';
 import postForm from './../../helpers/postForm';
 import putForm from './../../helpers/putForm';
-
-
+import { AuthContext } from './../../Auth';
 
 const ModifyClient = ({ title, openModal, handleClose, data }) => {
+	const { currentUser, token } = useContext(AuthContext);
 	const {
 		watch,
 		control,
@@ -33,30 +33,49 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 	const [razonSocial, setRazonSocial] = useState('');
 
 	const sendSubmit = (json) => {
-		console.log('Enviando formulario');
-		handleClose(false);
-		console.log(json)
-		// console.log(data)
-		if (data.is_modify) {
+		// console.log('Enviando formulario');
+		if (data?.is_modify) {
 			const form = {
 				ruc: json.ruc,
 				service_user: json.service_user,
 				service_password: json.new_password,
 				is_active: json.is_active || false,
 			};
-			console.log(form)
-			putForm({ context: 'api/clients', data: form }).then((res) => {
+			console.log(form);
+			putForm({ context: 'api/clients', data: form, token }).then((res) => {
 				if (res.success) {
-					Swal.fire('Exito',res.message,'success')
+					Swal.fire('Exito', res.message, 'success');
 					reset({});
 				} else {
-					Swal.fire('Error',res.message,'error')
+					Swal.fire('Error', res.message, 'error');
 				}
 			});
 		} else {
-			console.log('json creado')
-			reset({})
+			const form = {
+				ruc: json.ruc,
+				credentials: [
+					{
+						service_user: json.service_user,
+						service_password: json.new_password,
+						is_active: json.is_active ? json.is_active : false,
+					},
+				],
+			};
+			console.log(form)
+			postForm({ context: 'api/clients', data: form, token }).then((res) => {
+				console.log(res)
+				if (res.success) {
+					Swal.fire('Exito', res.message, 'success');
+					reset({});
+				} else {
+					// console.error(res.message)
+					Swal.fire('Error!!', res.message, 'error');
+				}
+			});
+			console.log('json creado');
+			reset({});
 		}
+		handleClose(false);
 	};
 
 	const handleChangeRazonSocial = async (event) => {

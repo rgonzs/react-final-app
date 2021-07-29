@@ -1,5 +1,4 @@
 import {
-	Box,
 	Button,
 	Container,
 	FormControlLabel,
@@ -7,19 +6,20 @@ import {
 	Paper,
 	Radio,
 	RadioGroup,
-	TextField,
 	Typography,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { urlApiRest } from '../../utils/endpoints';
 import { useStyles } from './Report.styles';
 import { useGetData } from './../../hooks/useGetData';
 import DataTable from './../CustomComponents/DataTable';
 import DatePicker from './../CustomComponents/DatePicker';
 import { Controller, useForm } from 'react-hook-form';
-import useHandlePaginator from './../../hooks/useHandlePaginator';
 import ControlledInput from './../CustomComponents/ControlledInput';
 import postForm from './../../helpers/postForm';
+import { AuthContext } from './../../Auth';
+import { getReport } from './../../helpers/reportes/getReport';
+import Swal from 'sweetalert2';
 
 const columns = [
 	{
@@ -41,49 +41,29 @@ const columns = [
 		width: 120,
 		hide: false,
 	},
-	{ field: 'download', headerName: 'Descargar', width: 200 },
-];
-
-const rows = [
-	{
-		id: 1,
-		fecha_creacion: '2021-01-12 12:10:11',
-		ruc: '20478005017',
-		razon_social: 'Bizlinks S.A.C.',
-	},
-	{
-		id: 2,
-		fecha_creacion: '2021-01-12 12:10:11',
-		ruc: '20478005017',
-		razon_social: 'Bizlinks S.A.C.',
-	},
-	{
-		id: 3,
-		fecha_creacion: '2021-01-12 12:10:11',
-		ruc: '20478005017',
-		razon_social: 'Bizlinks S.A.C.',
-	},
-	{
-		id: 4,
-		fecha_creacion: '2021-01-12 12:10:11',
-		ruc: '20478005017',
-		razon_social: 'Bizlinks S.A.C.',
-	},
-	{
-		id: 5,
-		fecha_creacion: '2021-01-12 12:10:11',
-		ruc: '20478005017',
-		razon_social: 'Bizlinks S.A.C.',
-	},
-	{
-		id: 6,
-		fecha_creacion: '2021-01-12 12:10:11',
-		ruc: '20478005017',
-		razon_social: 'Bizlinks S.A.C.',
-	},
+	// {
+	// 	field: 'edit',
+	// 	headerName: 'Editar',
+	// 	sortable: false,
+	// 	width: 150,
+	// 	renderCell: (params) => (
+	// 		<strong>
+	// 			{/* {params.id} */}
+	// 			<GetAppIcon
+	// 				variant='contained'
+	// 				color='primary'
+	// 				size='small'
+	// 				onClick={(e) => console.log(params.id)}
+	// 			>
+	// 				editar
+	// 			</GetAppIcon>
+	// 		</strong>
+	// 	),
+	// },
 ];
 
 const Report = () => {
+	const { token } = useContext(AuthContext);
 	const classes = useStyles();
 	const {
 		control,
@@ -94,15 +74,9 @@ const Report = () => {
 		process: '',
 		cliente: '',
 	});
-	const { page, query, response, setEvent, setResponse } = useHandlePaginator();
 	const { data, isLoading, error } = useGetData(`${urlApiRest}/api/reports`);
+	const [selectedReport, setSelectedReport] = useState('');
 	// console.log(data.data.content);
-
-	const handlePageChange = (e) => {
-		console.log('fired');
-		setResponse(data);
-		setEvent(e);
-	};
 
 	const handleRequest = (data) => {
 		console.log(data);
@@ -111,8 +85,28 @@ const Report = () => {
 		} else {
 			const url = `${data.cliente}_${data.fecha_inicio}_${data.fecha_fin}`;
 			data = { ...data, url };
-			postForm({ context: 'api/reports', data });
+			postForm({ context: 'api/reports', data }).then((res) => {
+				if (res.success) {
+					Swal.fire('Exito', res.message, 'success')
+				} else {
+					Swal.fire('Error', res.message, 'error')
+				}
+			});
 		}
+	};
+
+	const handleDownloadReport = (e) => {
+		selectedReport.forEach((element) => {
+			getReport({ id: element.id, name: element.url }, token);
+		});
+	};
+
+	const handleSelectReport = (e) => {
+		const selectedIDs = new Set(e.selectionModel);
+		const selectedRowData = data.data.content.filter((row) =>
+			selectedIDs.has(row.id)
+		);
+		setSelectedReport(selectedRowData);
 	};
 
 	return (
@@ -205,6 +199,14 @@ const Report = () => {
 						>
 							Limpiar
 						</Button>
+						<Button
+							color='secondary'
+							variant='contained'
+							className={classes.button}
+							onClick={handleDownloadReport}
+						>
+							Descargar
+						</Button>
 					</form>
 				</Grid>
 
@@ -213,6 +215,7 @@ const Report = () => {
 					rows={data?.data.content}
 					// rows={rows}
 					loading={false}
+					onSelect={handleSelectReport}
 					// onPageChange={handlePageChange}
 				/>
 			</Grid>

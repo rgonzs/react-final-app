@@ -9,28 +9,33 @@ import {
 	Paper,
 	Box,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useStyles } from './Search.classes';
-// import withReactContent from 'sweetalert2-react-content';
-// import Swal from 'sweetalert2';
-import { usePostSearch } from '../../hooks/usePostSearch';
+import { useGetDocument } from './../../hooks/useGetDocument';
+import { AuthContext } from './../../Auth';
+import { JsonTable } from 'react-json-to-html';
 
-// const SwalAlert = withReactContent(Swal);
 const Search = () => {
+	const { token } = useContext(AuthContext);
 	const classes = useStyles();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm('');
-	const url = 'http://localhost:3333';
-	const [res, apiMethod] = usePostSearch({
-		url: url,
-		headers: { ContentType: 'application/json' },
-	});
+	const {
+		data: res,
+		isLoading,
+		error,
+		setQuery,
+	} = useGetDocument(token);
+
 	const sendSubmit = (data) => {
-		apiMethod(data);
+		console.log(data);
+		const { ruc, comprobante, tipo_documento } = data;
+		const [serie, correlativo] = comprobante.split('-');
+		setQuery({ ruc, tipo_documento, serie, correlativo });
 	};
 
 	return (
@@ -62,7 +67,11 @@ const Search = () => {
 							onInvalid={() => 'Ingresa un valor correcto'}
 							{...register('ruc', { required: true })}
 						/>
-						{errors.ruc && <span>Este campo es requerido</span>}
+						{errors.ruc && (
+							<Typography color='error' align='center'>
+								Este campo es requerido
+							</Typography>
+						)}
 					</Box>
 					<Box paddingTop={3}>
 						<TextField
@@ -72,7 +81,11 @@ const Search = () => {
 							className={classes.formControl}
 							{...register('comprobante', { required: true })}
 						/>
-						{errors.comprobante && <span>Este campo es requerido</span>}
+						{errors.comprobante && (
+							<Typography color='error' align='center'>
+								Este campo es requerido
+							</Typography>
+						)}
 					</Box>
 					<Box paddingTop={3}>
 						<FormControl className={classes.formControl}>
@@ -85,7 +98,7 @@ const Search = () => {
 								variant='outlined'
 								label='Tipo documento'
 								defaultValue={''}
-								{...register('TipoDoc', { required: true })}
+								{...register('tipo_documento', { required: true })}
 							>
 								<MenuItem aria-label='None' value=''>
 									Ninguno
@@ -95,7 +108,11 @@ const Search = () => {
 								<MenuItem value={'03'}>Boleta</MenuItem>
 							</Select>
 						</FormControl>
-						{errors.TipoDoc && <span>Este campo es requerido</span>}
+						{errors.tipo_documento && (
+							<Typography color='error' align='center'>
+								Este campo es requerido
+							</Typography>
+						)}
 					</Box>
 					<Box paddingTop={3}>
 						<Button
@@ -106,11 +123,13 @@ const Search = () => {
 						>
 							Buscar
 						</Button>
+						{/* {isLoading ? null : <JsonTable json={res?.content} />} */}
 					</Box>
-					{res.data?.ruc}
+					{res?.content && <JsonTable json={res?.content} indent={1}/>}
 				</form>
 			</Paper>
 		</Box>
+		
 	);
 };
 

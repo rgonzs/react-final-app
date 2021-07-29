@@ -9,9 +9,8 @@ import {
 	Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useFetchData } from '../../hooks/useFetchClients';
 import { useHistory } from 'react-router-dom';
-
+import { useFetchData } from '../../hooks/useFetchClients';
 import DataTable from '../CustomComponents/DataTable';
 import ModifyClient from '../ModifyClient/ModifyClient';
 
@@ -166,13 +165,14 @@ const ManageUsers = () => {
 				component={Paper}
 				className={classes.paper}
 				justify='space-around'
+				spacing={2}
 			>
 				<Grid item xs={12}>
 					<Typography variant='h6' align='center'>
 						Lista de clientes
 					</Typography>
 				</Grid>
-				<Grid item sm={3}>
+				<Grid item sm={12}>
 					<Box>
 						<TextField
 							variant='outlined'
@@ -180,6 +180,7 @@ const ManageUsers = () => {
 							color='primary'
 							inputProps={{ maxLength: 11, className: classes.input }}
 							onChange={handleInputSearchChange}
+							fullWidth={true}
 						/>
 					</Box>
 				</Grid>
@@ -204,6 +205,18 @@ const ManageUsers = () => {
 							onClick={handleResetFilter}
 						>
 							Limpiar
+						</Button>
+					</Box>
+				</Grid>
+				<Grid item sm={3}>
+					<Box>
+						<Button
+							variant='outlined'
+							color='primary'
+							fullWidth={true}
+							onClick={handleResetFilter}
+						>
+							Editar
 						</Button>
 					</Box>
 				</Grid>
