@@ -22,7 +22,7 @@ import Swal from 'sweetalert2';
 const Account = () => {
 	const classes = useStyles();
 	const { token } = useContext(AuthContext);
-	const { data } = useGetData(`${urlApiRest}/auth/me`);
+	const { data } = useGetData(`${urlApiRest}/auth/me`, token);
 
 	const {
 		register,
