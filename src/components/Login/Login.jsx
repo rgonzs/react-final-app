@@ -1,6 +1,5 @@
 import React, { useCallback, useContext } from 'react';
 import { withRouter } from 'react-router';
-// import firebase from '../../firebase';
 import { AuthContext } from './../../Auth';
 import { Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -9,34 +8,15 @@ import {
 	Box,
 	Button,
 	Container,
-	makeStyles,
 	Paper,
 	TextField,
 	Typography,
 } from '@material-ui/core';
+import useStyles from './styles';
 
-import logo from '../../assets/images/logo_white.png';
+import logo from '../../assets/images/logo_falso.png';
 import axios from 'axios';
 import { urlApiRest } from '../../utils/endpoints';
-
-const useStyles = makeStyles((theme) => ({
-	field: {
-		marginTop: theme.spacing(2),
-	},
-	formCenter: {
-		backgroundColor: 'white',
-	},
-	paper: {
-		display: 'flex',
-		flexDirection: 'column',
-		marginTop: theme.spacing(3),
-		marginBottom: theme.spacing(3),
-		padding: theme.spacing(2),
-		borderRadius: '20px',
-		width: 400,
-		alignItems: 'center',
-	},
-}));
 
 const Login = ({ history }) => {
 	const classes = useStyles();
@@ -45,9 +25,8 @@ const Login = ({ history }) => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm('');
-  
-  const { currentUser, token, setToken } = useContext(AuthContext);
-  console.log(token)
+
+	const { currentUser, setToken } = useContext(AuthContext);
 
 	const handleSignIn = useCallback(
 		async (event) => {
@@ -68,9 +47,8 @@ const Login = ({ history }) => {
 				);
 				localStorage.setItem('access', response.data.content.access);
 				localStorage.setItem('refresh', response.data.content.refresh);
-				// await firebase.auth().signInWithEmailAndPassword(email, password);
-        setToken(response.data.content.access)
-				history.push('/');
+				setToken(response.data.content.access);
+				history.push('/manage');
 			} catch (error) {
 				alert(error);
 			}
@@ -78,16 +56,14 @@ const Login = ({ history }) => {
 		[setToken]
 	);
 
-
 	if (currentUser) {
-	  return <Redirect to="/" />;
+		return <Redirect to='/manage' />;
 	}
 
 	return (
 		<Container
 			direction='column'
 			justify='center'
-			// alignItems="center"
 		>
 			<Box
 				display='flex'

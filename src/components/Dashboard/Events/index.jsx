@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   },
 });
 
-const DashboardEvents = () => {
+const Events = () => {
   const classes = useStyles();
   return (
     <>
@@ -33,4 +33,4 @@ const DashboardEvents = () => {
   );
 };
 
-export default DashboardEvents;
+export default Events;

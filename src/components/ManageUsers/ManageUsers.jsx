@@ -90,7 +90,6 @@ const ManageUsers = () => {
 	const [page, setPage] = useState('');
 	const [openModal, setOpenModal] = useState(false);
 	const [modalData, setModalData] = useState(null);
-	console.log(res);
 
 	const getQueryParams = (url) => {
 		const parsedUrl = new URL(url);

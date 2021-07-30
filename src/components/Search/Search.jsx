@@ -26,8 +26,8 @@ const Search = () => {
 	} = useForm('');
 	const {
 		data: res,
-		isLoading,
-		error,
+		// isLoading,
+		// error,
 		setQuery,
 	} = useGetDocument(token);
 

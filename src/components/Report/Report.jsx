@@ -41,25 +41,6 @@ const columns = [
 		width: 120,
 		hide: false,
 	},
-	// {
-	// 	field: 'edit',
-	// 	headerName: 'Editar',
-	// 	sortable: false,
-	// 	width: 150,
-	// 	renderCell: (params) => (
-	// 		<strong>
-	// 			{/* {params.id} */}
-	// 			<GetAppIcon
-	// 				variant='contained'
-	// 				color='primary'
-	// 				size='small'
-	// 				onClick={(e) => console.log(params.id)}
-	// 			>
-	// 				editar
-	// 			</GetAppIcon>
-	// 		</strong>
-	// 	),
-	// },
 ];
 
 const Report = () => {
@@ -74,7 +55,7 @@ const Report = () => {
 		process: '',
 		cliente: '',
 	});
-	const { data, isLoading, error } = useGetData(`${urlApiRest}/api/reports`);
+	const { data } = useGetData(`${urlApiRest}/api/reports`, token);
 	const [selectedReport, setSelectedReport] = useState('');
 	// console.log(data.data.content);
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { useGetData } from './../../hooks/useGetData';
+import { useGetData } from '../../../hooks/useGetData';
 import {
-  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -11,20 +10,10 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { urlApi } from '../../utils/endpoints';
+import { urlApi } from '../../../utils/endpoints';
+import useStyles from './styles'
 
-const useStyles = makeStyles({
-  title: {
-    marginTop: 6,
-  },
-  table: {
-    minWidth: 100,
-  },
-  paper: {
-    height: 250,
-    borderRadius: '25px',
-  },
-});
+
 
 const DashboardTable = () => {
   const classes = useStyles();

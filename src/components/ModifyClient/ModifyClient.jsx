@@ -20,7 +20,7 @@ import putForm from './../../helpers/putForm';
 import { AuthContext } from './../../Auth';
 
 const ModifyClient = ({ title, openModal, handleClose, data }) => {
-	const { currentUser, token } = useContext(AuthContext);
+	const { token } = useContext(AuthContext);
 	const {
 		watch,
 		control,
@@ -28,12 +28,10 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm('');
-	// console.log(data)
 
 	const [razonSocial, setRazonSocial] = useState('');
 
 	const sendSubmit = (json) => {
-		// console.log('Enviando formulario');
 		if (data?.is_modify) {
 			const form = {
 				ruc: json.ruc,
@@ -61,14 +59,13 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 					},
 				],
 			};
-			console.log(form)
+			console.log(form);
 			postForm({ context: 'api/clients', data: form, token }).then((res) => {
-				console.log(res)
+				console.log(res);
 				if (res.success) {
 					Swal.fire('Exito', res.message, 'success');
 					reset({});
 				} else {
-					// console.error(res.message)
 					Swal.fire('Error!!', res.message, 'error');
 				}
 			});
@@ -129,6 +126,7 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 									handleCustomOnChange={handleChangeRazonSocial}
 									control={control}
 									value={data && data.ruc}
+									errorhandler={errors.ruc}
 								/>
 								{errors.ruc && (
 									<Typography color='error'>{errors.ruc.message}</Typography>
@@ -144,6 +142,7 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 									variant='outlined'
 									helperText='Este campo se completara automaticamente'
 									fullWidth={true}
+									errorHandler={errors}
 									value={data?.razon_social ? data?.razon_social : razonSocial}
 								/>
 							</Box>
@@ -156,6 +155,7 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 									length={20}
 									control={control}
 									type='text'
+									errorhandler={errors.service_user}
 									value={data && data.service_user}
 								/>
 								{errors.service_user && (
@@ -174,6 +174,7 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 									control={control}
 									type='password'
 									minLength={12}
+									errorhandler={errors.new_password}
 								/>
 								{errors.new_password && (
 									<Typography color='error'>

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Search from './components/Search/Search';
-import Dashboard from './components/Dashboard/Dashboard';
+// import Dashboard from './pages/Dashboard/Dashboard';
 import GlobalStyle from './globalStyles';
 import Report from './components/Report/Report';
 import NavbarUI from './components/Navbar/NavbarUI';
@@ -11,25 +11,8 @@ import ManageClientUsers from './components/ManageUsers/ManageClientUsers';
 import { AuthProvider } from './Auth';
 import PrivateRoute from './PrivateRoute';
 
-// import { createTheme, ThemeProvider } from '@material-ui/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-
-import { esES } from '@material-ui/core/locale';
-
-const theme = createMuiTheme(
-	{
-		palette: {
-			primary: {
-				main: '#0068d0',
-			},
-			secondary:{
-				main: '#5D7185'
-			}
-		},
-	},
-	esES
-);
+import theme from './theme/customTheme';
 
 function App() {
 	return (
@@ -42,7 +25,7 @@ function App() {
 						<Route path='/login'>
 							<Login />
 						</Route>
-						<PrivateRoute exact path='/' component={Dashboard} />
+						{/* <PrivateRoute exact path='/' component={Dashboard} /> */}
 						<PrivateRoute path='/search' component={Search} />
 						<PrivateRoute exact path='/report' component={Report} />
 						<PrivateRoute exact path='/account' component={Account} />

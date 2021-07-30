@@ -12,6 +12,7 @@ const ControlledInput = ({
 	passwordRef,
 	type = 'text',
 	value = '',
+	errorHandler: errorhandler
 }) => {
 	const textRules = {
 		required: true,
@@ -41,16 +42,18 @@ const ControlledInput = ({
 	return (
 		<div>
 			<Controller
-				render={({ field }) => {
+				render={({ field:{ref, ...field} }) => {
 					return (
 						<TextField
 							{...field}
 							name={field.name}
 							label={label}
+							inputRef={ref}
 							variant='outlined'
 							fullWidth={true}
 							autoComplete='false'
 							value={value ? value : undefined}
+							error={!!errorhandler}
 							type={
 								type === 'password' || type === 'password_confirm'
 									? 'password'

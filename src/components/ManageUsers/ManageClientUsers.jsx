@@ -5,7 +5,6 @@ import {
 	Container,
 	Grid,
 	Paper,
-	TextField,
 	Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -57,7 +56,7 @@ const ManageClientUsers = () => {
 		data: res,
 		isLoading,
 		error,
-		query,
+		// query,
 		setQuery,
 	} = useFetchData('/api/details', id);
 	const [page, setPage] = useState('');

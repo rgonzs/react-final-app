@@ -1,10 +1,10 @@
 import React from "react";
 
-import { useGetData } from "../../hooks/useGetData";
+import { useGetData } from "../../../hooks/useGetData";
 import { Line } from "react-chartjs-2";
-import { urlApi } from './../../utils/endpoints';
+import { urlApi } from '../../../utils/endpoints';
 
-const DashboardChart = () => {
+const Chart = () => {
   const { data, isLoading, error } = useGetData(`${urlApi}/events2`);
   const labels = data?.name;
   const chartConfig = {
@@ -47,4 +47,4 @@ const DashboardChart = () => {
   );
 };
 
-export default DashboardChart;
+export default Chart;
