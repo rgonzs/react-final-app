@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
 	Box,
 	Button,
@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 
 import DataTable from '../CustomComponents/DataTable';
 import ModifyClient from '../ModifyClient/ModifyClient';
+import { AuthContext } from './../../Auth';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -50,15 +51,15 @@ const columns = [
 
 const ManageClientUsers = () => {
 	const classes = useStyles();
+	const { token } = useContext(AuthContext);
 	const { ruc, id } = useParams();
-
 	const {
 		data: res,
 		isLoading,
 		error,
 		// query,
 		setQuery,
-	} = useFetchData('/api/details', id);
+	} = useFetchData('/api/details', id, token);
 	const [page, setPage] = useState('');
 	const [openModal, setOpenModal] = useState(false);
 	const [modalData, setModalData] = useState(null);
@@ -89,6 +90,10 @@ const ManageClientUsers = () => {
 	const handleResetFilter = (e) => {
 		setPage(0);
 		setQuery({ page: 1, size: 5 });
+	};
+
+	const handlePageSizeChange = (e) => {
+		setQuery({ page: 1, size: e.pageSize });
 	};
 
 	const handleEditClient = (e) => {
@@ -172,6 +177,7 @@ const ManageClientUsers = () => {
 							total={res.pagination?.total}
 							onPageChange={handlePageChange}
 							onEditClient={handleEditClient}
+							onPageSizeChange={handlePageSizeChange}
 						/>
 					) : error ? (
 						<Typography color='error' align='center'>

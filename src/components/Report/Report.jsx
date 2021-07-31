@@ -66,7 +66,7 @@ const Report = () => {
 		} else {
 			const url = `${data.cliente}_${data.fecha_inicio}_${data.fecha_fin}`;
 			data = { ...data, url };
-			postForm({ context: 'api/reports', data }).then((res) => {
+			postForm({ context: 'api/reports', data, token }).then((res) => {
 				if (res.success) {
 					Swal.fire('Exito', res.message, 'success')
 				} else {
@@ -125,11 +125,11 @@ const Report = () => {
 											control={<Radio color='primary' />}
 											label='Generar reporte'
 										/>
-										<FormControlLabel
+										{/* <FormControlLabel
 											value='find'
 											control={<Radio color='primary' />}
 											label='Buscar reporte'
-										/>
+										/> */}
 									</RadioGroup>
 								);
 							}}

@@ -84,7 +84,7 @@ const ModifyClient = ({ title, openModal, handleClose, data }) => {
 	};
 
 	const callApi = async (ruc) => {
-		let result = await getRucData(ruc);
+		let result = await getRucData(ruc, token );
 		if (result.content !== null) {
 			return result?.content.razonSocial;
 		} else if (result.success === false) {

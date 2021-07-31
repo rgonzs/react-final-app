@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
 	Box,
 	Button,
@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { useFetchData } from '../../hooks/useFetchClients';
 import DataTable from '../CustomComponents/DataTable';
 import ModifyClient from '../ModifyClient/ModifyClient';
+import { AuthContext } from './../../Auth';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -55,30 +56,12 @@ const columns = [
 		width: 140,
 		type: 'boolean',
 	},
-	// {
-	// 	field: 'edit',
-	// 	headerName: 'Editar',
-	// 	sortable: false,
-	// 	width: 150,
-	// 	renderCell: (params) => (
-	// 		<strong>
-	// 			{/* {params.id} */}
-	// 			<Button
-	// 				variant='contained'
-	// 				color='primary'
-	// 				size='small'
-	// 				onClick={(e) => console.log(params.id)}
-	// 			>
-	// 				editar
-	// 			</Button>
-	// 		</strong>
-	// 	),
-	// },
 ];
 
 const ManageUsers = () => {
 	const history = useHistory();
 	const classes = useStyles();
+	const { token } = useContext(AuthContext);
 
 	const {
 		data: res,
@@ -86,7 +69,7 @@ const ManageUsers = () => {
 		error,
 		query,
 		setQuery,
-	} = useFetchData('/api/clients');
+	} = useFetchData('/api/clients', token);
 	const [page, setPage] = useState('');
 	const [openModal, setOpenModal] = useState(false);
 	const [modalData, setModalData] = useState(null);
@@ -136,6 +119,10 @@ const ManageUsers = () => {
 	const handleCreateClient = (e) => {
 		setOpenModal(true);
 	};
+	
+	const handlePageSizeChange = (e) => {
+		setQuery({ page: 1, size: e.pageSize });
+	};
 
 	const create = (
 		<ModifyClient
@@ -144,6 +131,7 @@ const ManageUsers = () => {
 			title='Crear cliente'
 		/>
 	);
+
 
 	const modify = (
 		<ModifyClient
@@ -230,6 +218,7 @@ const ManageUsers = () => {
 							total={res.pagination?.total}
 							onPageChange={handlePageChange}
 							onEditClient={handleEditClient}
+							onPageSizeChange={handlePageSizeChange}
 						/>
 					) : error ? (
 						error

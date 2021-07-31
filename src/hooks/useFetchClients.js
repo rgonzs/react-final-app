@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchData } from './../helpers/fetchClients';
 
-export const useFetchData = (url) => {
+export const useFetchData = (url, token) => {
 	let [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ export const useFetchData = (url) => {
 		async function getData() {
 			try {
 				const { page, size, ruc } = query;
-				const res = await fetchData({ page, size, ruc, url }, signal);
+				const res = await fetchData({ page, size, ruc, url }, token ,signal);
 				setData(res);
 				setError(null);
 				setIsLoading(false);

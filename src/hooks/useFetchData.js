@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import fetchData from './../helpers/fetchData';
 
-export const useFetchData = (url, id = null) => {
+export const useFetchData = (url, id = null, token) => {
 	let [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ export const useFetchData = (url, id = null) => {
 		async function getData() {
 			try {
 				const { page, size, ruc } = query;
-				const res = await fetchData({ page, size, ruc, id, url }, signal);
+				const res = await fetchData({ page, size, ruc, id, url }, token, signal);
 				setData(res);
 				setError(null);
 				setIsLoading(false);

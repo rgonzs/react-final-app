@@ -1,9 +1,13 @@
 import { urlApiRest } from '../utils/endpoints';
 
-export const getRucData = async (ruc) => {
-	// const response = await fetch(`${urlApiRest}/api/client?ruc=${ruc}`, { signal });
+export const getRucData = async (ruc, token) => {
+	const headers = {
+		Authorization: `Bearer ${token}`
+	}
 	try {
-		const response = await fetch(`${urlApiRest}/api/client?ruc=${ruc}`);
+		const response = await fetch(`${urlApiRest}/api/client?ruc=${ruc}`,{
+			headers: headers
+		});
 		if (response.status === 200) {
 			return await response.json();
 		} else if (response.status === 404) {
