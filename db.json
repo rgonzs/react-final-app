@@ -1,0 +1,133 @@
+{
+  "events": [
+    {
+      "name": "Lunes",
+      "report": 4000,
+      "uAdded": 2400,
+      "amt": 2400
+    },
+    {
+      "name": "Martes",
+      "report": 3000,
+      "uAdded": 1398,
+      "amt": 2210
+    },
+    {
+      "name": "Miercoles",
+      "report": 2000,
+      "uAdded": 9800,
+      "amt": 2290
+    },
+    {
+      "name": "Jueves",
+      "report": 2780,
+      "uAdded": 3908,
+      "amt": 2000
+    },
+    {
+      "name": "Viernes",
+      "report": 1890,
+      "uAdded": 4800,
+      "amt": 2181
+    },
+    {
+      "name": "Sabado",
+      "report": 2390,
+      "uAdded": 3800,
+      "amt": 2500
+    },
+    {
+      "name": "Domingo",
+      "report": 3490,
+      "uAdded": 4300,
+      "amt": 2100
+    }
+  ],
+  "events2": {
+    "name": [
+      "lunes",
+      "martes",
+      "miercoles",
+      "jueves",
+      "viernes",
+      "sabado",
+      "domingo"
+    ],
+    "value": [
+      100,
+      200,
+      300,
+      150,
+      122,
+      143,
+      163
+    ]
+  },
+  "dashboard": [
+    {
+      "id": 1,
+      "fecha": "2020/12/01",
+      "ruc": "20478115117",
+      "rz": "RUC PRUEBA",
+      "user": "Usuario Prueba"
+    },
+    {
+      "id": 2,
+      "fecha": "2020/12/02",
+      "ruc": "20478115118",
+      "rz": "RUC PRUEBA",
+      "user": "Usuario Prueba 2"
+    },
+    {
+      "id": 3,
+      "fecha": "2020/12/03",
+      "ruc": "20478115118",
+      "rz": "RUC PRUEBA",
+      "user": "Usuario Prueba 3"
+    },
+    {
+      "id": 4,
+      "fecha": "2020/12/02",
+      "ruc": "20478115118",
+      "rz": "RUC PRUEBA",
+      "user": "Usuario Prueba 2"
+    },
+    {
+      "id": 5,
+      "fecha": "2020/12/03",
+      "ruc": "20478115118",
+      "rz": "RUC PRUEBA",
+      "user": "Usuario Prueba 3"
+    },
+    {
+      "id": 6,
+      "fecha": "2020/12/02",
+      "ruc": "20478115118",
+      "rz": "RUC PRUEBA",
+      "user": "Usuario Prueba 2"
+    },
+    {
+      "id": 7,
+      "fecha": "2020/12/03",
+      "ruc": "20478115118",
+      "rz": "RUC PRUEBA",
+      "user": "Usuario Prueba 3"
+    }
+  ],
+  "search": [
+    {
+      "ruc": "20478005017",
+      "comprobante": "F001-22222",
+      "TipoDoc": "03",
+      "id": 1
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Renato Gonzales",
+      "email": "renato.gonzales@tecsup.edu.pe",
+      "avatar": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+    }
+  ]
+}
